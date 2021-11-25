@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cron表达式 | LXY's blog</title><meta name="keywords" content="Cron表达式"><meta name="author" content="LXY,aethon47@163.com"><meta name="copyright" content="LXY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Cron表达式是一个字符串,字符串以5或6个空格隔开,分为6或7个域,每一个域代表一个含义,Cron有如下两种语法格式：   123Seconds Minutes Hours DayofMonth Month DayofWeek YearSeconds Minutes Hours DayofMonth Month DayofWeek秒      分钟    小时   日期       月份">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cron表达式">
+<meta property="og:url" content="http://example.com/2020/04/09/Cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LXY&#39;s blog">
+<meta property="og:description" content="Cron表达式是一个字符串,字符串以5或6个空格隔开,分为6或7个域,每一个域代表一个含义,Cron有如下两种语法格式：   123Seconds Minutes Hours DayofMonth Month DayofWeek YearSeconds Minutes Hours DayofMonth Month DayofWeek秒      分钟    小时   日期       月份">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-04-09T01:09:00.000Z">
+<meta property="article:modified_time" content="2021-11-25T09:04:03.771Z">
+<meta property="article:author" content="LXY">
+<meta property="article:tag" content="Cron表达式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/04/09/Cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Cron表达式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-25 17:04:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LXY's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Cron表达式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-04-09T01:09:00.000Z" title="发表于 2020-04-09 09:09:00">2020-04-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-25T09:04:03.771Z" title="更新于 2021-11-25 17:04:03">2021-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/">Cron表达式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Cron表达式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ul>
+<li>Cron表达式是一个字符串,字符串以5或6个空格隔开,分为<strong>6或7个域</strong>,每一个域代表一个含义,Cron有如下两种语法格式：   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Seconds Minutes Hours DayofMonth Month DayofWeek Year</span><br><span class="line">Seconds Minutes Hours DayofMonth Month DayofWeek</span><br><span class="line">秒      分钟    小时   日期       月份   周        年</span><br></pre></td></tr></table></figure></li>
+</ul>
+<span id="more"></span>
+
+<ul>
+<li>每一个域可出现的字符如下： <ul>
+<li>所有域都支持：<code>, - * /</code></li>
+<li>每个域还额外支持：<ul>
+<li><code>Seconds</code>:有效范围为0-59的整数 </li>
+<li><code>Minutes</code>:有效范围为0-59的整数 </li>
+<li><code>Hours</code>:有效范围为0-23的整数 </li>
+<li><code>DayofMonth</code>:<code>&quot;? L W C&quot;</code>,有效范围为0-31的整数 </li>
+<li><code>Month</code>:有效范围为1-12的整数或<code>JAN-DEC</code></li>
+<li><code>DayofWeek</code>:<code>&quot;? L C #&quot;</code>,有效范围为1-7的整数或<code>SUN-SAT</code>两个范围。1表示星期天,2表示星期一,依次类推</li>
+<li><code>Year</code>:有效范围为1970-2099年</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>每一个域都可使用数字,但还可以出现如下<strong>特殊字符</strong>,它们的含义是： <ul>
+<li><code>*</code>：表示<strong>匹配该域的任意值</strong>,假如在Minutes域使用<code>*</code>, 即表示每分钟（每一天/一周的每一天）都会触发事件。</li>
+<li><code>?</code>:只能用在<strong>DayofMonth</strong>和<strong>DayofWeek</strong>两个域。它也匹配域的任意值,但实际不会。<ul>
+<li>因为<strong>DayofMonth</strong>和<strong>DayofWeek</strong>会相互影响。例如想在每月的20日触发调度,不管20日到底是星期几,则只能使用如下写法：<code>13 13 15 20 * ?</code>, 其中最后一位只能用<code>?</code>,而不能使用<code>*</code>,如果使用<code>*</code>表示不管星期几都会触发,实际上并不是这样。 </li>
+</ul>
+</li>
+<li><code>-</code>:表示<strong>范围</strong>,例如在Minutes域使用5-20,表示从5分到20分钟每分钟触发一次 </li>
+<li><code>/</code>：表示<strong>起始时间开始触发</strong>,然后<strong>每隔固定时间触发一次</strong>,例如在Minutes域使用5/20,则意味着第5分钟触发一次,而递增20分钟后即25,45等再分别触发一次. </li>
+<li><code>,</code>:表示<strong>列出枚举值</strong>。例如：在Minutes域使用5,20,则意味着在5和20分每分钟触发一次。 </li>
+<li><code>L</code>:表示<strong>最后</strong>,只能出现在<strong>DayofWeek</strong>和<strong>DayofMonth</strong>域,如果在DayofWeek域使用5L,意味着在最后的一个星期四触发。 </li>
+<li><code>W</code>: 表示<strong>有效工作日</strong>(周一到周五),只能出现在<strong>DayofMonth</strong>域,系统将在离指定日期的<strong>最近的有效工作日</strong>触发事件。例如：在 DayofMonth使用5W,如果5日是星期六,则将在最近的工作日：星期五,即4日触发。如果5日是星期天,则在6日(周一)触发；如果5日在星期一到星期五中的一天,则就在5日触发。另外一点,<strong>W的最近寻找不会跨过月份</strong></li>
+<li><code>LW</code>:这两个字符可以连用,表示在<strong>某个月最后一个工作日</strong>,即<strong>最后一个星期五</strong>。 </li>
+<li><code>#</code>:用于确定<strong>每个月第几个星期几</strong>,只能出现在<strong>DayofMonth</strong>域。例如在4#2或者Wed#2,表示某月的第二个星期三。</li>
+</ul>
+</li>
+</ul>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&quot;0 15 10 * * ? *&quot;: 每天10点15分触发</span><br><span class="line">&quot;0 15 10 * * ? 2017&quot;: 2017年每天10点15分触发</span><br><span class="line">&quot;0 * 14 * * ?&quot;: 每天下午2点到下午2:59期间的每1分钟触发 </span><br><span class="line">&quot;0 0/5 14 * * ?&quot;: 每天下午2点到下午2:55期间的每5分钟触发 </span><br><span class="line">&quot;0 0/5 14,18 * * ?&quot;: 每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 </span><br><span class="line">&quot;0 0-5 14 * * ?&quot;: 每天下午2点到下午2:05期间的每1分钟触发 </span><br><span class="line">&quot;0 15 10 L * ?&quot;: 每月最后一日的上午10:15触发 </span><br><span class="line">&quot;0 15 10 6L * ?&quot;: 每月倒数第6天的上午10:15触发 </span><br><span class="line">&quot;0 15 10 ? * 6L&quot;: 每月的最后一个星期五上午10:15触发 </span><br><span class="line">&quot;0 15 10 ? * 6#3&quot;: 每月的第三个星期五上午10:15触发</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h2 id="crontab–Linux"><a href="#crontab–Linux" class="headerlink" title="crontab–Linux"></a>crontab–Linux</h2><ul>
+<li>使用crontab你可以在指定的时间执行一个shell脚本或者一系列Linux命令。例如系统管理员安排一个备份任务使其每天都运行。</li>
+<li>如何往crontab中添加一个作业?  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 这个命令会通过编辑器打开,修改crontab文件. 如果文件不存在会自动创建</span></span><br><span class="line">crontab –e</span><br></pre></td></tr></table></figure></li>
+<li>相关命令：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 显示crontab文件</span></span><br><span class="line">crontab -l</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除crontab文件,即移除所有的crontab任务</span></span><br><span class="line">crontab -r</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除crontab文件前提醒用户</span></span><br><span class="line">crontab -ir</span><br></pre></td></tr></table></figure></li>
+<li>0 5 * * * /root/bin/backup.sh</li>
+<li>这将会在每天早上5点运行 /root/bin/backup.sh</li>
+</ul>
+<h3 id="以下是crontab文件的格式："><a href="#以下是crontab文件的格式：" class="headerlink" title="以下是crontab文件的格式："></a>以下是crontab文件的格式：</h3><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 时间相关的总共5个域</span><br><span class="line">minute hour dayOfMonth month dayOfWeek full-path-to-shell-script</span><br><span class="line">分钟   小时  日期       月份   周        shell脚本地址</span><br></pre></td></tr></table></figure>
+</code></pre>
+<ul>
+<li>每一个域可出现的字符如下： <ul>
+<li><code>minute</code>: 区间为0–59 </li>
+<li><code>hour</code>: 区间为0–23 </li>
+<li><code>dayOfMonth</code>: 区间为0–31 </li>
+<li><code>month</code>: 区间为1–12. 1是1月、12是12月. </li>
+<li><code>dayOfWeek</code>: 区间为0–7. 周日可以是0或7.</li>
+<li><code>*/数字</code> ：表示每几分钟或每几个小时</li>
+<li><code>,</code> ：在某几个特点的时间点,如哪几个小时,哪几天。。。</li>
+<li><code>-</code> :几点到几点,或者周几到周几。。。</li>
+</ul>
+</li>
+<li>示例：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;1 0 * * *&quot;:在00:01运行,即每天凌晨过一分钟。</span><br><span class="line">&quot;59 11 * * 1,2,3,4,5&quot;:每个工作日(Mon–Fri)11:59运行</span><br><span class="line">&quot;*/5 * * * *&quot;:每5分钟运行一次命令运行</span><br><span class="line">&quot;10 13 1 * *&quot;:每个月的第一天13:10运行</span><br><span class="line">&quot;0 23 * * 1-5&quot;:每个工作日23点运行</span><br><span class="line">&quot;* 23-7/1 * * *&quot;:晚上11点到早上7点之间,每隔一小时运行</span><br><span class="line">&quot;0/25 * * * *&quot;:从0分钟开始每25分钟执行一次,即每小时的25分钟,50分钟执行一次</span><br></pre></td></tr></table></figure></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:aethon47@163.com">LXY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/04/09/Cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/">http://example.com/2020/04/09/Cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">LXY's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/">Cron表达式</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/04/10/database/MongoDB%E5%91%BD%E4%BB%A4/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MongoDB教程</div></div></a></div><div class="next-post pull-right"><a href="/2020/04/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">正则表达式</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LXY</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Coding-Coder"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Coding-Coder" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:aethon47@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">本站仅供个人学习笔记使用！如有问题或文章存在错误，请联系aethon47@163.com。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crontab%E2%80%93Linux"><span class="toc-number"></span> <span class="toc-text">crontab–Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E4%B8%8B%E6%98%AFcrontab%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">以下是crontab文件的格式：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次丢失的GitHub Contributions绿格"/></a><div class="content"><a class="title" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格">记一次丢失的GitHub Contributions绿格</a><time datetime="2021-06-04T06:07:00.000Z" title="发表于 2021-06-04 14:07:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 常见案例"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例">Git 常见案例</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 教程"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程">Git 教程</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Ruby"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby">Linux安装Ruby</a><time datetime="2021-05-06T06:47:00.000Z" title="发表于 2021-05-06 14:47:00">2021-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Redis"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis">Linux安装Redis</a><time datetime="2021-05-06T03:10:00.000Z" title="发表于 2021-05-06 11:10:00">2021-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LXY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

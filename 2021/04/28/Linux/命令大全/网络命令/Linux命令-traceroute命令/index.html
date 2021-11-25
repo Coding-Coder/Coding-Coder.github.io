@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux命令-traceroute命令 | LXY's blog</title><meta name="keywords" content="Linux"><meta name="author" content="LXY,aethon47@163.com"><meta name="copyright" content="LXY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="&amp;emsp;通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的。linux系统中，我们称之为traceroute,在MS Windows中为tracert。  &amp;emsp;traceroute通过发送小的数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux命令-traceroute命令">
+<meta property="og:url" content="http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-traceroute%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="LXY&#39;s blog">
+<meta property="og:description" content="&amp;emsp;通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的。linux系统中，我们称之为traceroute,在MS Windows中为tracert。  &amp;emsp;traceroute通过发送小的数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-28T06:19:30.000Z">
+<meta property="article:modified_time" content="2021-11-25T09:04:02.393Z">
+<meta property="article:author" content="LXY">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-traceroute%E5%91%BD%E4%BB%A4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux命令-traceroute命令',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-25 17:04:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LXY's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux命令-traceroute命令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-28T06:19:30.000Z" title="发表于 2021-04-28 14:19:30">2021-04-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-25T09:04:02.393Z" title="更新于 2021-11-25 17:04:02">2021-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/">Linux命令大全</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/">网络命令</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux命令-traceroute命令"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>&emsp;通过<code>traceroute</code>我们可以知道信息从你的计算机到互联网另一端的主机是<strong>走的什么路径</strong>。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的。linux系统中，我们称之为traceroute,在MS Windows中为tracert。 </p>
+<p>&emsp;traceroute通过发送小的数据包到目的设备直到其返回，来测量其需要多长时间。一条路径上的每个设备traceroute要测3次。输出结果中包括每次测试的时间(ms)和设备的名称（如有的话）及其IP地址。</p>
+<p>在大多数情况下，我们会在linux主机系统下，直接执行命令行：<code>traceroute hostname</code></p>
+<p>而在Windows系统下是执行tracert的命令：<code>tracert hostname</code></p>
+<h3 id="1-命令格式："><a href="#1-命令格式：" class="headerlink" title="1.命令格式："></a>1.命令格式：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute [参数] [主机]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-命令功能："><a href="#2-命令功能：" class="headerlink" title="2.命令功能："></a>2.命令功能：</h3><p>&emsp;traceroute指令让你追踪网络数据包的路由途径，预设数据包大小是40Bytes，用户可另行设置。</p>
+<p>&emsp;具体参数格式：traceroute [-dFlnrvx][-f&lt;存活数值&gt;][-g&lt;网关&gt;…][-i&lt;网络界面&gt;][-m&lt;存活数值&gt;][-p&lt;通信端口&gt;][-s&lt;来源地址&gt;][-t&lt;服务类型&gt;][-w&lt;超时秒数&gt;][主机名称或IP地址][数据包大小]</p>
+<h3 id="3-命令参数："><a href="#3-命令参数：" class="headerlink" title="3.命令参数："></a>3.命令参数：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-d, 使用Socket层级的排错功能。</span><br><span class="line">-f, 设置第一个检测数据包的存活数值TTL的大小。</span><br><span class="line">-F, 设置勿离断位。</span><br><span class="line">-g, 设置来源路由网关，最多可设置8个。</span><br><span class="line">-i, 使用指定的网络界面送出数据包。</span><br><span class="line">-I, 使用ICMP回应取代UDP资料信息。</span><br><span class="line">-m, 设置检测数据包的最大存活数值TTL的大小。</span><br><span class="line">-n, 直接使用IP地址而非主机名称。</span><br><span class="line">-p, 设置UDP传输协议的通信端口。</span><br><span class="line">-r, 忽略普通的Routing Table，直接将数据包送到远端主机上。</span><br><span class="line">-s, 设置本地主机送出数据包的IP地址。</span><br><span class="line">-t, 设置检测数据包的TOS数值。</span><br><span class="line">-v, 详细显示指令的执行过程。</span><br><span class="line">-w, 设置等待远端主机回报的时间。</span><br><span class="line">-x, 开启或关闭数据包的正确性检验。</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-使用实例："><a href="#4-使用实例：" class="headerlink" title="4.使用实例："></a>4.使用实例：</h3><p>实例1：traceroute用法简单、最常用的用法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute www.baidu.com </span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">记录按序列号从1开始，每个纪录就是一跳，每跳表示一个网关，我们看到每行有三个时间，单位是ms，其实就是-q的默认参数。探测数据包向每个网关发送三个数据包后，网关响应后返回的时间；如果您用 traceroute -q 4 www.58.com ，表示向每个网关发送4个数据包。</span><br><span class="line"></span><br><span class="line">有时我们traceroute 一台主机时，会看到有一些行是以星号表示的。出现这样的情况，可能是防火墙封掉了ICMP的返回信息，所以我们得不到什么相关的数据包返回数据。</span><br><span class="line"></span><br><span class="line">有时我们在某一网关处延时比较长，有可能是某台网关比较阻塞，也可能是物理设备本身的原因。当然如果某台DNS出现问题时，不能解析主机名、域名时，也会 有延时长的现象；您可以加-n 参数来避免DNS解析，以IP格式输出数据。</span><br><span class="line"></span><br><span class="line">如果在局域网中的不同网段之间，我们可以通过traceroute 来排查问题所在，是主机的问题还是网关的问题。如果我们通过远程来访问某台服务器遇到问题时，我们用到traceroute 追踪数据包所经过的网关，提交IDC服务商，也有助于解决问题；但目前看来在国内解决这样的问题是比较困难的，就是我们发现问题所在，IDC服务商也不可能帮助我们解决。</span><br></pre></td></tr></table></figure>
+<p>实例2：跳数设置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute -m 10 www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>实例3：显示IP地址，不查主机名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute -n www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>实例4：探测包使用的基本UDP端口设置6888</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute -p 6888 www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>实例5：把探测包的个数设置为值4</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute -q 4 www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>实例6：绕过正常的路由表，直接发送到网络相连的主机</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute -r www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>实例7：把对外发探测包的等待响应时间设置为3秒</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute -w 3 www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="Traceroute的工作原理："><a href="#Traceroute的工作原理：" class="headerlink" title="Traceroute的工作原理："></a>Traceroute的工作原理：</h3><p>Traceroute最简单的基本用法是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute hostname</span><br></pre></td></tr></table></figure>
+
+<p>Traceroute程序的设计是利用ICMP及IP header的TTL（Time To Live）栏位（field）。首先，traceroute送出一个TTL是1的IP datagram（其实，每次送出的为3个40字节的包，包括源地址，目的地址和包发出的时间标签）到目的地，当路径上的第一个路由器（router）收到这个datagram时，它将TTL减1。此时，TTL变为0了，所以该路由器会将此datagram丢掉，并送回一个「ICMP time exceeded」消息（包括发IP包的源地址，IP包的所有内容及路由器的IP地址），traceroute 收到这个消息后，便知道这个路由器存在于这个路径上，接着traceroute 再送出另一个TTL是2 的datagram，发现第2 个路由器…… traceroute 每次将送出的datagram的TTL 加1来发现另一个路由器，这个重复的动作一直持续到某个datagram 抵达目的地。当datagram到达目的地后，该主机并不会送回ICMP time exceeded消息，因为它已是目的地了，那么traceroute如何得知目的地到达了呢？</p>
+<p>Traceroute在送出UDP datagrams到目的地时，它所选择送达的port number 是一个一般应用程序都不会用的号码（30000 以上），所以当此UDP datagram 到达目的地后该主机会送回一个「ICMP port unreachable」的消息，而当traceroute 收到这个消息时，便知道目的地已经到达了。所以traceroute 在Server端也是没有所谓的Daemon 程式。</p>
+<p>Traceroute提取发 ICMP TTL到期消息设备的IP地址并作域名解析。每次 ，Traceroute都打印出一系列数据,包括所经过的路由设备的域名及 IP地址,三个包每次来回所花时间。</p>
+<h3 id="windows之tracert"><a href="#windows之tracert" class="headerlink" title="windows之tracert:"></a>windows之tracert:</h3><p>格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout] target_name</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tracert [-d] [-h maximum_hops] [-j computer-list] [-w timeout] target_name</span><br></pre></td></tr></table></figure>
+<p>该诊断实用程序通过向目的地发送具有不同生存时间 (TL) 的 Internet 控制信息协议 (CMP) 回应报文，以确定至目的地的路由。路径上的每个路由器都要在转发该 ICMP 回应报文之前将其 TTL 值至少减 1，因此 TTL 是有效的跳转计数。当报文的 TTL 值减少到 0 时，路由器向源系统发回 ICMP 超时信息。通过发送 TTL 为 1 的第一个回应报文并且在随后的发送中每次将 TTL 值加 1，直到目标响应或达到最大 TTL 值，Tracert 可以确定路由。通过检查中间路由器发发回的 ICMP 超时 (ime Exceeded) 信息，可以确定路由器。注意，有些路由器“安静”地丢弃生存时间 (TLS) 过期的报文并且对 tracert 无效。</p>
+<p>参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-d, 指定不对计算机名解析地址。</span><br><span class="line">-h, maximum_hops 指定查找目标的跳转的最大数目。</span><br><span class="line">-jcomputer-list, 指定在 computer-list 中松散源路由。</span><br><span class="line">-w timeout, 等待由 timeout 对每个应答指定的毫秒数。</span><br><span class="line">target_name, 目标计算机的名称。</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:aethon47@163.com">LXY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-traceroute%E5%91%BD%E4%BB%A4/">http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-traceroute%E5%91%BD%E4%BB%A4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">LXY's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-find%E5%91%BD%E4%BB%A4/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux命令-find命令</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-telnet%E5%91%BD%E4%BB%A4/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux命令-telnet命令</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/02/06/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/Linux-%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D/" title="Linux根目录介绍"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-06</div><div class="title">Linux根目录介绍</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/Linux%E5%91%BD%E4%BB%A4%E7%B3%BB%E5%88%97%E6%80%BB%E7%9B%AE%E5%BD%95/" title="Linux命令大全-目录"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令大全-目录</div></div></a></div><div><a href="/2021/02/07/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%86%85%E6%A0%B8%E5%8F%8A%E5%8F%91%E8%A1%8C%E7%89%88%E5%88%86%E7%B1%BB/" title="Linux内核及发行版分类"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-07</div><div class="title">Linux内核及发行版分类</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-at%E5%91%BD%E4%BB%A4/" title="Linux命令-at命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令-at命令</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-cal%E5%91%BD%E4%BB%A4/" title="Linux命令-cal命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令-cal命令</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-basename%E5%91%BD%E4%BB%A4/" title="Linux命令-basename命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令-basename命令</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LXY</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Coding-Coder"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Coding-Coder" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:aethon47@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">本站仅供个人学习笔记使用！如有问题或文章存在错误，请联系aethon47@163.com。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">1.命令格式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">2.命令功能：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">3.命令参数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">4.使用实例：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Traceroute%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">Traceroute的工作原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#windows%E4%B9%8Btracert"><span class="toc-number">6.</span> <span class="toc-text">windows之tracert:</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次丢失的GitHub Contributions绿格"/></a><div class="content"><a class="title" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格">记一次丢失的GitHub Contributions绿格</a><time datetime="2021-06-04T06:07:00.000Z" title="发表于 2021-06-04 14:07:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 常见案例"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例">Git 常见案例</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 教程"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程">Git 教程</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Ruby"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby">Linux安装Ruby</a><time datetime="2021-05-06T06:47:00.000Z" title="发表于 2021-05-06 14:47:00">2021-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Redis"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis">Linux安装Redis</a><time datetime="2021-05-06T03:10:00.000Z" title="发表于 2021-05-06 11:10:00">2021-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LXY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

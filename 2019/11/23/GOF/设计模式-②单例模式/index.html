@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设计模式|②单例模式 | LXY's blog</title><meta name="keywords" content="设计模式"><meta name="author" content="LXY,aethon47@163.com"><meta name="copyright" content="LXY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="&amp;emsp;今天要和大家分享的是GOF23模式中第一个模式——单例模式。这个模式号称是GOF23所有设计模式中最简单的一个设计模式。不过，等你看完这篇文章后会发现，这句话听听就好，别当真。😂单例模式简单吗？这是不存在的，要想吃透里面的细节并不容易，尤其是初学者。但是单例模式在实际生活和开发中，却是大量的被使用到，因此，这个模式我们是需要深入学习掌握的。下面不废话直入主题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式|②单例模式">
+<meta property="og:url" content="http://example.com/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LXY&#39;s blog">
+<meta property="og:description" content="&amp;emsp;今天要和大家分享的是GOF23模式中第一个模式——单例模式。这个模式号称是GOF23所有设计模式中最简单的一个设计模式。不过，等你看完这篇文章后会发现，这句话听听就好，别当真。😂单例模式简单吗？这是不存在的，要想吃透里面的细节并不容易，尤其是初学者。但是单例模式在实际生活和开发中，却是大量的被使用到，因此，这个模式我们是需要深入学习掌握的。下面不废话直入主题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-11-23T10:10:00.000Z">
+<meta property="article:modified_time" content="2021-11-25T09:03:54.756Z">
+<meta property="article:author" content="LXY">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '设计模式|②单例模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-25 17:03:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LXY's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">设计模式|②单例模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-11-23T10:10:00.000Z" title="发表于 2019-11-23 18:10:00">2019-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-25T09:03:54.756Z" title="更新于 2021-11-25 17:03:54">2021-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="设计模式|②单例模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>&emsp;今天要和大家分享的是GOF23模式中第一个模式——<strong>单例模式</strong>。这个模式号称是GOF23所有设计模式中最简单的一个设计模式。不过，等你看完这篇文章后会发现，这句话听听就好，别当真。😂单例模式简单吗？这是不存在的，要想吃透里面的细节并不容易，尤其是初学者。但是单例模式在实际生活和开发中，却是<strong>大量</strong>的被使用到，因此，这个模式我们是需要深入学习掌握的。下面不废话直入主题。</p>
+<span id="more"></span>
+
+<h2 id="为什么要使用单例模式"><a href="#为什么要使用单例模式" class="headerlink" title="为什么要使用单例模式"></a>为什么要使用单例模式</h2><p>单例模式属于上篇说过的设计模式三大分类中的第一类——<strong>创建型模式</strong>，自然是跟对象的创建相关，而且听这名字——单例，也就是说，这个模式在创建对象的同时，还致力于控制创建对象的数量，是的，只能创建一个实例，多的不要。或者从这一方面讲，它确实是最简单的模式。每个Java程序员都知道，Java中的对象都是使用new关键字来加载类并在堆内存中开辟空间创建对象，这是平时用到最多创建对象的方式。也知道每次new都会产生一个全新的对象。一直这样用着，好像从来没觉得有啥不好，更没有怎么思考过，这玩意居然还要去控制它的数量。</p>
+<blockquote>
+<p>那么问题来了，到底我们为什么要控制对象创建的个数？直接new一下多省事啊❓</p>
+</blockquote>
+<p>既然这个模式存在并且大量使用，说明有些场景下，没它还真不行。那么什么场景下会没它不行呢？我举个栗子🌰，比如我们平时使用的Windows上的回收站，是不是只有一个？要是有多个，会发生什么？我刚把回收站清空了，换到另一个回收站看垃圾还在，那这垃圾到底是在，还是不在？是不是很诡异了？另外比如博客上会有一个博客访问人数统计，这个东西要是不是单例的会有啥问题？今天统计了流量有100个，第二天用了一个新的计数器，又回到0了重新开始统计，那这个统计还有意义吗？</p>
+<blockquote>
+<p>也就是说，有些场景下，不使用单例模式，会导致系统同一时刻出现多个状态缺乏同步，用户自然无法判断当前处于什么状态.</p>
+</blockquote>
+<p>在技术领域，单例模式的场景更是不计其数。</p>
+<p>比如XXX池的基本都是单例，为什么呢？对象的创建是一个比较耗时耗费资源的过程，尤其是像线程、数据库连接等，都属于使用非常频繁，但是创建销毁又非常耗时的资源，如果不使用池来控制其数量和创建，会对性能造成极大的影响。另外，像线程池中的线程，可能会需要相互通信，如果不是在同一个池中，对通信也会有影响。</p>
+<blockquote>
+<p>通过控制创建对象的数量，可以节约系统资源开销</p>
+</blockquote>
+<p>另外像应用中的日志系统，一般也会采用单例模式。这样所有的日志都会统一追加，方便后续管理。</p>
+<p>读取配置的类一般会使用一个单例去统一加载读取。因为一般配置只会在应用启动时加载一次，而且会需要给整个应用所有对象共享。</p>
+<blockquote>
+<p>全局数据共享</p>
+</blockquote>
+<p>还有在各大主流开源框架以及JDK源码当中，也是大量使用到这种模式。后续我也会抛砖引玉给大家举两个例子。</p>
+<p>正是存在上述这些痛点，使得有时候我们创建对象还真不能再简单任性直接new一下，需要对其做一些精细控制。那怎么才能控制只创建一个对象呢？</p>
+<p>经过无数前人总结，一般有以下这些经典的解决方案：</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h3><p>啥叫饿汉式？饿了就立刻想到吃，类比到创建对象也是如此，当类一初始化，该类的对象就立刻会被实例化。</p>
+<blockquote>
+<p>👉怎么实现？</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span> </span>&#123;&#125; ❶</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HungrySingleton instance = <span class="keyword">new</span> HungrySingleton();❷</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当外部调用<code>HungrySingleton.getInstance()</code>时，就会返回唯一的<code>instance</code>实例。为什么是唯一的？</p>
+<p>这代码中有几个要点:</p>
+<ul>
+<li>标注❶处该类的构造器用<code>private</code>修饰，防止外部手动通过new创建。后面的例子都需要这样，后面就不解释了。</li>
+<li>标注❷处是核心，instance使用static修饰，然后调用new创建对象，我们知道static修饰的东西都属于类，而且在类加载阶段就已经被加载，并且只能被加载一次。就是类加载这种特性很好的保证了单例的特性，也天然防止了并发的问题。</li>
+</ul>
+<p>卧槽，单例模式居然如此简单，这么轻松就完成一个，这就算完事了？呵呵……</p>
+<p>这个代码确实实现了单例的效果，只要调用<code>HungrySingleton.getInstance()</code>，你就算是神仙也造不出第二个对象……（其实后面会知道，还是有办法的）</p>
+<blockquote>
+<p>👉但是想想，这个方法有啥问题没？</p>
+</blockquote>
+<p>没错，一旦类初始化时就会创建这个对象，有人说，创建就创建呗，这有啥大不了的？大部分情况下确实是没啥问题，但是如果创建这个对象极其耗费时间和资源呢？这样必然会造成巨大的性能损耗。</p>
+<p>另外还有一种情况，有的时候我只是想单纯的加载一下类，但并不想去用该对象，那这个时候这种模式就属于浪费内存了。什么意思？我举个栗子🌰，如下代码，其他代码和上面一样，就是加了❶行，然后我现在外部调用HungrySingleton.flag，会发生什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> flag = <span class="number">1</span>;	❶</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HungrySingleton instance = <span class="keyword">new</span> HungrySingleton();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>学过Java类加载机制的都知道，当去访问一个类的静态属性的时候会触发该类初始化，这就导致，我明明只是想使用一下flag属性，并不想用HungrySingleton对象，但由于你访问了flag导致HungrySingleton的初始化，从而导致instance被实例化，造成内存泄露。</p>
+<p>看来这种方案可行，但不是完美的，那有啥更好方案，既能保证只创建单个对象，又可以做到<strong>真正需要使用该对象时再创建它</strong>（延迟加载），从来达到节约系统资源目的？答案当然是有的！</p>
+<h3 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h3><p>和饿汉相反，懒汉自然是很懒，能不吃就不吃饭，等到实在饿得不行了（需要用该对象了）才去吃饭（创建对象）。</p>
+<blockquote>
+<p>👉怎么实现？</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazySingleton instance = <span class="keyword">null</span>;	❶ </span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span> </span>&#123;&#125;	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;	❷</span><br><span class="line">        <span class="keyword">if</span>(instance == <span class="keyword">null</span>)&#123; ❸</span><br><span class="line">            instance = <span class="keyword">new</span> LazySingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关注❶处，类加载时不会立刻创建对象了，然后当<code>LazySingleton.getInstance()</code>调用❷处方法时，通过判断instance == null，如果有了就不创建了，没有就才会创建。</p>
+<p>哈哈，既实现了延迟加载，节约资源，又保证了单例，貌似没毛病。飘了~😎</p>
+<p>没错，在单线程下面确实如此，可惜忽略了多线程场景。为什么在多线程下会有问题？分析一下，现在有两个线程A和B，同时到达❸处，自然此时instance = new LazySingleton()这一行没被调用过，自然❸处条件成立，然后A和B同时进入了if{}代码块，后面的事情就知道了，A和B线程都会调用instance = new LazySingleton()，从而创建多个对象，破坏了单例。</p>
+<p>那怎么办？有并发问题？那就加锁同步呗……</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span> </span>&#123;&#125;	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> LazySingleton instance = <span class="keyword">null</span>;	❶</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123; ❷</span><br><span class="line">        <span class="keyword">if</span>(instance == <span class="keyword">null</span>)&#123;</span><br><span class="line">            instance = <span class="keyword">new</span> LazySingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这代码中有几个要点</p>
+<ul>
+<li>标注❶处其它和上面一样，多了一个<code>volatile</code>修饰，这主要是为了保证多线程下内存可见性。因为高速缓存关系，一个线程的修改并不一定要实时同步到另一线程，<code>volatile</code>可以用来解决这个问题。</li>
+<li>标注❷处加<code>synchronized</code>同步锁，可以保证同一时刻只会有一个线程进入getInstance()方法，自然只会有一个线程调用<code>instance = new LazySingleton()</code>，单例自然就保证了。但同时这个带来了一个新问题，因为每个线程不管instance有没有被创建过，都会去调用getInstance()，因为if(instance == null)是需要进入方法后才判断的，然而getInstance()又是一个同步的，同一时刻只会有一个线程进入，其余线程都必须等待，这就会导致线程阻塞，导致性能下降。</li>
+</ul>
+<p>上述方法确实实现了延迟创建对象，但是<code>性能低下</code>的问题如何解决？聪明的攻城狮们又想到了新的方案……</p>
+<h3 id="双重检测锁"><a href="#双重检测锁" class="headerlink" title="双重检测锁"></a>双重检测锁</h3><blockquote>
+<p>👉怎么实现？</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span> </span>&#123;&#125;	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> LazySingleton instance = <span class="keyword">null</span>; ❷</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; ❶</span><br><span class="line">      <span class="keyword">if</span>(instance == <span class="keyword">null</span>)&#123; ❸	</span><br><span class="line">        <span class="keyword">synchronized</span> (LazySingleton.class) &#123; ❺</span><br><span class="line">          <span class="keyword">if</span>(instance == <span class="keyword">null</span>)	❹</span><br><span class="line">          instance = <span class="keyword">new</span> LazySingleton();❻</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个代码看上去会比较复杂，讲几个关注点：</p>
+<ul>
+<li>标注❶处方法内部和上面例子代码最大的区别在于，有❸❹两处if判断。<strong>为什么要两次判断？</strong><ul>
+<li>第一次if判断是为了提高效率。怎么理解？回顾懒汉式方案代码，<code>synchronized</code>将整个方法加同步锁，也就是说，不管外部（线程）在调用<code>getInstance()</code>方法这一刻该对象是否已经被创建好，都需要阻塞等待。而❸处的if判断就使得，只有此时真的还没有创建出对象才会进入<code>synchronized</code>代码块，如果已经创建了就直接<code>return</code>了，所以显然提高性能了。</li>
+<li>那么❹处的第二次if判断又是为什么？这才是用来<strong>保证多线程安全</strong>的。又怎么理解？设想下面这种场景。A和B两个线程同时来到❺处，此时因为<code>synchronized</code>缘故，只能有一个线程进入，假设A拿到了这把锁，进入<code>synchronized</code>代码块，然后通过❻创建出了一个<code>LazySingleton</code>实例，然后离开<code>synchronized</code>代码块，然后把锁释放了，但是还没等到它<code>return</code>的时候，B线程拿到了这把锁，进入<code>synchronized</code>代码块，此时要是没有❹处if判断，B线程照样可以来到❻处，以迅雷不及掩耳之势噼里啪啦一顿操作，又创建出一个<code>LazySingleton</code>实例。显然此时，单例模式已经被破坏了。所以❹处的判断也不可省略。</li>
+</ul>
+</li>
+<li>标注❷处看上去和懒汉式的代码没区别，但是这边<code>volatile</code>语义已经发生改变，已经不单纯是为了内存可见的问题了，还涉及到<strong>指令重排序</strong>的问题。怎么理解？一切问题出在❻处。震惊！❻处看似平常的一行代码居然会有问题。是的，下面我来详解。❻处会创建一个<code>LazySingleton</code>实例，并且赋值给<code>instance</code>变量，很遗憾，这一个动作在指令层面并非原子操作。这个动作可以分为4步:<ul>
+<li>1.申请内存空间</li>
+<li>2.初始化默认值</li>
+<li>3.执行构造器初始化</li>
+<li>4.将<code>instance</code>指向创建的对象</li>
+</ul>
+  而有些编译器会对代码做指令重排序，因为3和4本身相互并不存在依赖，指令重排序的存在可能会导致3和4顺序发生颠倒。这会有什么问题？首先在单线程下并不会有什么问题，为什么？因为指令重排序的前提就是不改变在单线程下的结果，无论先执行3还是4，最后返回的对象都是初始化好后的。但是在多线程下呢？设想一种极端场景，现在假设A线程拿到锁进入到❻处，然后它完成了上面4步的1和2，因为现在指令重排序了，下面A线程会将<code>instance</code>指向创建的对象，也就是说，此时<code>instance != null</code>了！然后正当A要去执行构造器初始化对象时，巧得很，这时候B线程来到❸处，判断instance == null不成立了，直接返回，独留A线程在原地骂娘“尼玛，我™还没初始化对象呢……”，因为返回了一个没有经过初始化的对象，后续操作自然会有问题。正是因为这个原因，所以❷处<code>volatile</code>不可省略，<strong>主要原因就在于防止指令重排序</strong>，避免上述问题。</li>
+</ul>
+<p>那是不是这样就万无一失了呢？很遗憾，上述如此严密的控制，还是不能完全保证出问题。What？那就是上述的做法有个前提，<strong>JDK必须是JDK5或更高版本</strong>，因为从JDK5才开始使用新的JSR-133内存模型规范，而在这个规范中才增强了<code>volatile</code>这个语义……</p>
+<p>卧槽，原来搞了大半天还是有问题啊……心好累，而且说实话，就算不考虑JDK版本这个问题，这种方案的实现代码太过丑陋，本身看着就不是很爽，而且考虑的东西太多，稍有闪失就GG了。所以，这种方案虽然分析了这么多，但是其实没有实际意义，实际工作中强烈不建议使用。那还有没有好的方案啊？当然有啊！</p>
+<h3 id="静态内部类实现"><a href="#静态内部类实现" class="headerlink" title="静态内部类实现"></a>静态内部类实现</h3><p>根据类加载机制，外部类的初始化并不会导致静态内部类的初始化。</p>
+<blockquote>
+<p>👉怎么验证？</p>
+</blockquote>
+<p>如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Inner</span></span>&#123;</span><br><span class="line">        <span class="keyword">static</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Inner loading ...&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(Demo.a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>Demo.a</code>引用外部类<code>Demo</code>的静态变量<code>a</code>，会导致外部类的初始化，如果<code>Inner</code>被初始化了，必然会执行<code>static</code>块，从而打印<code>&quot;Inner loading ...&quot;</code>，然而很遗憾，这个代码执行结果只会打印出<code>&quot;1&quot;</code>。这也印证了开始的结论。有了这个结论，我们就可以利用它实现优雅的单例了。哈哈~😍</p>
+<blockquote>
+<p>👉怎么实现？</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerSingleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">StaticInnerSingleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerSingletonInstance</span> </span>&#123; ❶</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> StaticInnerSingleton instance = <span class="keyword">new</span> StaticInnerSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> StaticInnerSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123; ❷</span><br><span class="line">        <span class="keyword">return</span> StaticInnerSingletonInstance.instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>讲几个关注点：</p>
+<ul>
+<li>❶处<code>StaticInnerSingletonInstance</code>是一个静态内部类，内部静态字段<code>instance</code>负责创建对象。因为上面的结论，所以当外部类<code>StaticInnerSingleton</code>初始化时，并不会导致<code>StaticInnerSingletonInstance</code>初始化，进而导致<code>instance</code>的初始化。所以实现了<strong>延迟加载</strong>。</li>
+<li>当外部调用❷处<code>getInstance()</code>时，通过<code>StaticInnerSingletonInstance.instance</code>对<code>instance</code>引用才会导致对象的创建。由于<code>static</code>的属性<strong>只会跟随类加载初始化一次，天然保证了线程安全问题</strong>。</li>
+</ul>
+<p>这个方案算是完美解决了上述所有方案的问题，且保留了所有的优点。算是一个完美方案。</p>
+<p>还有没有其它方案？必须的！</p>
+<h3 id="枚举实现"><a href="#枚举实现" class="headerlink" title="枚举实现"></a>枚举实现</h3><p>用枚举实现单例是最简单的了，因为，<strong>Java中的枚举类型本身就天然单例的</strong>.</p>
+<blockquote>
+<p>👉怎么实现？</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">EnumSingletonInstance</span></span>&#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EnumSingletonInstance <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	    <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>唯一遗憾的是，这个方案和<strong>饿汉式</strong>一样，<strong>没法延迟加载</strong>。枚举类加载自然就会初始化<code>INSTANCE</code>。</p>
+<p>常用的单例模式的方案基本就是这些。那这样是不是就真的万无一失了呢？很遗憾的告诉大家，上述这些方法还不是绝对能保证只创建一个对象。mmp……我擦，我就想玩个单例咋这么累呢？心塞……😭是的，上面的方案除了<strong>枚举方案</strong>，其余方案都可以被破解。下面我们来了解一下。</p>
+<h2 id="破解单例"><a href="#破解单例" class="headerlink" title="破解单例"></a>破解单例</h2><p>破解单例有两种方法，<strong>反射</strong>或者<strong>反序列化</strong>。下面我用代码做简单演示。以饿汉式为例，其余模式同理，大家可以自行测试。</p>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><blockquote>
+<p>👉怎么破解？</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//饿汉式的代码省略，参考前面饿汉式章节</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    System.out.println(HungrySingleton.getInstance());</span><br><span class="line">    System.out.println(HungrySingleton.getInstance());</span><br><span class="line">    System.out.println(<span class="string">&quot;反射破解单例...&quot;</span>);</span><br><span class="line">    HungrySingleton instance1 = HungrySingleton.class.newInstance();</span><br><span class="line">    HungrySingleton instance2 = HungrySingleton.class.newInstance();</span><br><span class="line">    System.out.println(instance1);</span><br><span class="line">    System.out.println(instance2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如图，很清楚的看到单例被破解了:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%A0%B4%E8%A7%A3%E5%8D%95%E4%BE%8B-%E5%8F%8D%E5%B0%84.png" alt="破解单例-反射"></p>
+<blockquote>
+<p>👉如何防止？</p>
+</blockquote>
+<p>很简单，因为<code>Class.newInstance()</code>是通过调用<code>HungrySingleton</code>无参构造器创建对象的，只要在构造器中加入有以下逻辑即可。这样，当类初始化时，第一次正常创建出实例并赋值给<code>instance</code>。当再想通过反射想要破解单例时，自然会抛出异常阻止继续实例化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//饿汉式的其它代码，参考前面饿汉式章节</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;只能创建一个对象！&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h3><blockquote>
+<p>👉怎么破解？</p>
+</blockquote>
+<p>另外，通过<strong>序列化</strong>和<strong>反序列化</strong>也可以破解单例。（<strong>前提是单例类实现了Serializable接口</strong>）</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    System.out.println(HungrySingleton.getInstance());</span><br><span class="line">    System.out.println(HungrySingleton.getInstance());</span><br><span class="line">    System.out.println(<span class="string">&quot;反序列化破解单例...&quot;</span>);</span><br><span class="line">    HungrySingleton instance1 = HungrySingleton.getInstance();</span><br><span class="line">    ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">    ObjectOutputStream out = <span class="keyword">new</span> ObjectOutputStream(baos);</span><br><span class="line">    out.writeObject(instance1);	<span class="comment">//序列化</span></span><br><span class="line">    ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> ByteArrayInputStream(baos.toByteArray()));</span><br><span class="line">    HungrySingleton instance2 = (HungrySingleton) ois.readObject();	<span class="comment">//反序列化</span></span><br><span class="line">    System.out.println(instance1);</span><br><span class="line">    System.out.println(instance2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如图，很清楚的看到单例也被破解了:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%A0%B4%E8%A7%A3%E5%8D%95%E4%BE%8B-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.png" alt="破解单例-反序列化"></p>
+<blockquote>
+<p>👉如何防止？</p>
+</blockquote>
+<p>也非常简单，只需要在单例类中添加如下<code>readResolve()</code>方法，然后在方法体中返回我们的单例实例即可。为什么？因为<code>readResolve()</code>方法是在<code>readObject()</code>方法之后才被调用，因而它每次都会用我们自己生成的单实例替换从流中读取的对象。这样自然就保证了单例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h2><p>关于单例模式的全部内容就是这些，最后来做个总结，那么这么多的单例模式实现方案我们到底需要选择哪个呢？技术选型从来不是非黑即白的问题，而是需要根据你的实际应用场景决定的。不过从上述各种单例模式的特点，我们可以得出以下结论：</p>
+<ul>
+<li>从<strong>安全性</strong>角度考虑，枚举显然是最安全的，保证绝对的单例，因为可以天然防止反射和反序列化的破解手段。而其它方案一定场合下全部可以被破解。</li>
+<li>从<strong>延迟加载</strong>考虑，<strong>懒汉式</strong>、<strong>双重检测锁</strong>、<strong>静态内部类</strong>方案都可以实现，然而<strong>双重检测锁</strong>方案代码实现复杂，而且还有对JDK版本的要求，首先排除。<strong>懒汉式</strong>加锁性能较差，而<strong>静态内部类</strong>实现方法既能够延迟加载节约资源，另外也不需要加锁，性能较好，所以这方面考虑<strong>静态内部类</strong>方案最佳。<blockquote>
+<p>👉一般选用原则：<br>&emsp;&emsp;单例对象占用资源少，不需要延时加载：枚举式好于饿汉式。<br>&emsp;&emsp;单例对象占用资源大，需要延时加载：静态内部类式好于懒汉式。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="抛砖引玉"><a href="#抛砖引玉" class="headerlink" title="抛砖引玉"></a>抛砖引玉</h2><p>前面也提到，单例模式在开源框架中被使用的非常之多，下面我就抛砖引玉挑选几处给大家讲解一下，</p>
+<p>下面这个代码截取自<strong>Mybatis</strong>中，这是一个典型的使用<strong>静态内部类</strong>方式实现单例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">VFS</span> </span>&#123;</span><br><span class="line">  	... <span class="comment">//省略大量无关代码</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">VFSHolder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> VFS INSTANCE = createVFS();</span><br><span class="line">        <span class="function"><span class="keyword">static</span> VFS <span class="title">createVFS</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            ... <span class="comment">//省略创建过程</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">		... <span class="comment">//省略大量无关代码</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> VFS <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> VFSHolder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">  	... <span class="comment">//省略大量无关代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在JDK底层也是大量使用了单例模式，比如，<code>Runtime</code>类是JDK中表示Java运行时的环境的一个类，其内部实现也是采用单例模式，因为一个应用程序只需要一个运行时的环境即可，并且是采用<strong>饿汉式</strong>方式实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Runtime</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Runtime currentRuntime = <span class="keyword">new</span> Runtime();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Runtime <span class="title">getRuntime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> currentRuntime;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Runtime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最后啰嗦一句"><a href="#最后啰嗦一句" class="headerlink" title="最后啰嗦一句"></a>最后啰嗦一句</h2><p>在结束之前，我再多说一句，网上有些文章经常会用Spring的单例bean和Mybatis中的ErrorContext类作为单例模式的例子，其实这是有问题的。</p>
+<ul>
+<li>首先，Spring中的单例bean跟本文讲的单例模式并没有关系，不是一回事，可能也就名字比较像，这也是容易混淆的地方，实现方式当然也就天差地别了。Spring的单例bean是通过将指定类首次创建的bean进行缓存，后续去获取的时候，如果设置为<code>singleton</code>，就直接会从缓存中返回之前缓存的对象，而不会创建新对象。但是这个是有前提的，那就是在同一个容器中。如果在你的JVM中存在多个Spring容器，该类也就会创建多个实例了。所以这是不能算是真正的单例模式。本文上述描述的单例模式是指JVM进程级别的，也就是说，只要是在同一个JVM中，单例类只会存在一个对象。</li>
+<li><code>Mybatis</code>中的ErrorContext类中采用的是ThreadLocal机制保证同一个线程跟唯一一个ErrorContext实例绑定，但是这个也是有前提的，那就是在线程范围内的，在每一个线程内部，确实做到了只创建一个实例，但是从应用级别或者JVM级别依然不是单例，所以不能将其称之为单例模式。</li>
+</ul>
+<blockquote>
+<p>一言以蔽之，真正的单例模式，是指JVM进程级别的！</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:aethon47@163.com">LXY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">http://example.com/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">LXY's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">设计模式|③工厂模式</div></div></a></div><div class="next-post pull-right"><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A0%E5%BC%80%E7%AF%87/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">设计模式|①开篇</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A0%E5%BC%80%E7%AF%87/" title="设计模式|①开篇"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-23</div><div class="title">设计模式|①开篇</div></div></a></div><div><a href="/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="设计模式|③工厂模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-24</div><div class="title">设计模式|③工厂模式</div></div></a></div><div><a href="/2019/11/27/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A3%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" title="设计模式|④原型模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-27</div><div class="title">设计模式|④原型模式</div></div></a></div><div><a href="/2019/11/28/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A4%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" title="设计模式|⑤建造者模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-28</div><div class="title">设计模式|⑤建造者模式</div></div></a></div><div><a href="/2019/12/02/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A5%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="设计模式|⑥代理模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-02</div><div class="title">设计模式|⑥代理模式</div></div></a></div><div><a href="/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A6%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" title="设计模式|⑦适配器模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-26</div><div class="title">设计模式|⑦适配器模式</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LXY</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Coding-Coder"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Coding-Coder" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:aethon47@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">本站仅供个人学习笔记使用！如有问题或文章存在错误，请联系aethon47@163.com。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">为什么要使用单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A5%BF%E6%B1%89%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">饿汉式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%87%92%E6%B1%89%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">懒汉式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E9%87%8D%E6%A3%80%E6%B5%8B%E9%94%81"><span class="toc-number">2.3.</span> <span class="toc-text">双重检测锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.4.</span> <span class="toc-text">静态内部类实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.5.</span> <span class="toc-text">枚举实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%B4%E8%A7%A3%E5%8D%95%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">破解单例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84"><span class="toc-number">3.1.</span> <span class="toc-text">反射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">3.2.</span> <span class="toc-text">反序列化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9"><span class="toc-number">4.</span> <span class="toc-text">如何选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89"><span class="toc-number">5.</span> <span class="toc-text">抛砖引玉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%95%B0%E5%97%A6%E4%B8%80%E5%8F%A5"><span class="toc-number">6.</span> <span class="toc-text">最后啰嗦一句</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次丢失的GitHub Contributions绿格"/></a><div class="content"><a class="title" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格">记一次丢失的GitHub Contributions绿格</a><time datetime="2021-06-04T06:07:00.000Z" title="发表于 2021-06-04 14:07:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 常见案例"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例">Git 常见案例</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 教程"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程">Git 教程</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Ruby"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby">Linux安装Ruby</a><time datetime="2021-05-06T06:47:00.000Z" title="发表于 2021-05-06 14:47:00">2021-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Redis"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis">Linux安装Redis</a><time datetime="2021-05-06T03:10:00.000Z" title="发表于 2021-05-06 11:10:00">2021-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LXY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

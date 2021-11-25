@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux命令-expect命令 | LXY's blog</title><meta name="keywords" content="Linux"><meta name="author" content="LXY,aethon47@163.com"><meta name="copyright" content="LXY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="&amp;emsp;expect可以实现shell实现不了的用户交互的需求。expect可以将交互写在一个脚本上，完成很多自动化的动作，比如ssh、ftp登陆等，都是需要交互需求的。 &amp;emsp;expect是需要安装的，直接yum -y install expect安装即可。 &amp;emsp;expect的四个关键命令为：spawn、expect、send、set,其中spawn是调用要执行的命令，expe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux命令-expect命令">
+<meta property="og:url" content="http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-expect%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="LXY&#39;s blog">
+<meta property="og:description" content="&amp;emsp;expect可以实现shell实现不了的用户交互的需求。expect可以将交互写在一个脚本上，完成很多自动化的动作，比如ssh、ftp登陆等，都是需要交互需求的。 &amp;emsp;expect是需要安装的，直接yum -y install expect安装即可。 &amp;emsp;expect的四个关键命令为：spawn、expect、send、set,其中spawn是调用要执行的命令，expe">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-28T05:57:00.000Z">
+<meta property="article:modified_time" content="2021-11-25T09:03:56.959Z">
+<meta property="article:author" content="LXY">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-expect%E5%91%BD%E4%BB%A4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux命令-expect命令',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-25 17:03:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LXY's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux命令-expect命令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-28T05:57:00.000Z" title="发表于 2021-04-28 13:57:00">2021-04-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-25T09:03:56.959Z" title="更新于 2021-11-25 17:03:56">2021-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/">Linux命令大全</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/">其他命令</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux命令-expect命令"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>&emsp;<code>expect</code>可以实现shell实现不了的<strong>用户交互</strong>的需求。<code>expect</code>可以将交互写在一个脚本上，完成很多<em>自动化的动作</em>，比如<code>ssh</code>、<code>ftp</code>登陆等，都是需要交互需求的。</p>
+<p>&emsp;<code>expect</code>是需要安装的，直接<code>yum -y install expect</code>安装即可。</p>
+<p>&emsp;<code>expect</code>的四个关键命令为：<code>spawn</code>、<code>expect</code>、<code>send</code>、<code>set</code>,其中<code>spawn</code>是<strong>调用要执行的命令</strong>，<code>expect</code>是<strong>等待命令提示信息的出现</strong>也即<strong>捕捉用户提示信息</strong>，<code>send</code>是<strong>发送需要交互的信息来替代手工的输入</strong>，<code>set</code>则是<strong>输入变量值</strong>。</p>
+<h3 id="1．命令格式："><a href="#1．命令格式：" class="headerlink" title="1．命令格式："></a>1．命令格式：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect [选项] [ -c cmds ] [ [ -[f|b] ] cmdfile] [ args]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2．命令功能："><a href="#2．命令功能：" class="headerlink" title="2．命令功能："></a>2．命令功能：</h3><p>&emsp;<code>expect</code>是一个免费的编程工具，用来<strong>实现自动的交互式任务</strong>，而无需人为干预。说白了，<code>expect</code>就是一套用来实现自动交互功能的软件。</p>
+<p>&emsp;在实际工作中，我们运行命令、脚本或程序时，这些命令、脚本或程序都需要从终端输入某些继续运行的指令，而这些输入都需要人为的手工进行。而利用<code>expect</code>，则可以根据程序的提示，模拟标准输入提供给程序，从而实现自动化交互执行。这就是<code>expect</code>！！！</p>
+<h3 id="3-工作流程："><a href="#3-工作流程：" class="headerlink" title="3.工作流程："></a>3.工作流程：</h3><p>&emsp;except的工作流程可以理解为： spawn启动进程 –&gt; expect期待关键字 –&gt; send向进程发送字符 –&gt; 退出结束</p>
+<h3 id="4．命令参数："><a href="#4．命令参数：" class="headerlink" title="4．命令参数："></a>4．命令参数：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-c, 从命令行执行expect脚本，默认expect是交互地执行的</span><br><span class="line">-d, 可以输出输出调试信息</span><br></pre></td></tr></table></figure>
+<p>expect常用命令总结:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">spawn               交互程序开始,后面跟命令或者指定程序</span><br><span class="line">expect              获取匹配信息匹配成功则执行expect后面的程序动作</span><br><span class="line">send exp_send       用于发送指定的字符串信息</span><br><span class="line">exp_continue        在expect中多次匹配就需要用到</span><br><span class="line">send_user           用来打印输出 相当于shell中的echo</span><br><span class="line">exit                退出expect脚本</span><br><span class="line">eof                 expect执行结束 退出</span><br><span class="line">set                 定义变量</span><br><span class="line">puts                输出变量</span><br><span class="line">set timeout         设置超时时间</span><br></pre></td></tr></table></figure>
+<h3 id="5-expect语法："><a href="#5-expect语法：" class="headerlink" title="5.expect语法："></a>5.expect语法：</h3><h4 id="5-1-spwan"><a href="#5-1-spwan" class="headerlink" title="5.1.spwan"></a>5.1.spwan</h4><p>spwan命令是expect的初始命令，它启动一个进程，之后所有expect操作都在这个进程中进行，其使用方法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spwan ssh root@192.168.1.26</span><br></pre></td></tr></table></figure>
+<p>在spwan命令后面，直接加上要启动的进程、命令等信息，除此之外，还支持其他选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-open, 启动文件进程，具体说明请自行查阅</span><br><span class="line">-ignore, 忽略某些信号，具体说明请自行查阅</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-expect"><a href="#5-2-expect" class="headerlink" title="5.2.expect"></a>5.2.expect</h4><p>使用方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect 表达式 动作 表达式 动作 ... ...</span><br></pre></td></tr></table></figure>
+<p>expect命令用于等候一个相匹配内容的输出，一旦匹配则执行expect后面的动作命令，这个命令接收几个特有参数，用的最多的就是-re，表示使用正则表达式进行匹配，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spwan ssh root@192.168.1.26</span><br><span class="line">expect -re &quot;.*password&quot; &#123;send &quot;root1234\r&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>expect是依附与spwan命令的，当执行ssh命令后，expect就会匹配命令执行后的输出，然后执行expect后面包含在{}中的<code>send</code>或<code>exp_send</code>动作，匹配及动作可以放在下一行，就可以省略{}，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spwan ssh root@192.168.1.26</span><br><span class="line">expect -re &quot;.*password&quot; </span><br><span class="line">send &quot;root1234\r&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-exp-send和send"><a href="#5-3-exp-send和send" class="headerlink" title="5.3.exp_send和send"></a>5.3.exp_send和send</h4><p>exp_send是expect中的动作，send和其作用一样。exp_send命令可以发送一些特殊符号：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">\r, 回车</span><br><span class="line">\n, 换行</span><br><span class="line">\t, 制表符</span><br><span class="line">```    </span><br><span class="line">send命令还有几个可选的参数：</span><br><span class="line">```shell</span><br><span class="line">-i, 指定spwan_id, 这个参数用来向不同的spwan_id的进程发送命令，是进行多进程控制的关键参数。</span><br><span class="line">-s, s代表slowly，也就是控制发送的速度，这个参数使用的时候要与expect中的变量send_slow向关联</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-4-exp-continue"><a href="#5-4-exp-continue" class="headerlink" title="5.4.exp_continue"></a>5.4.exp_continue</h4><p>这个命令一般用在动作中，它被使用的条件比较苛刻，例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/expect</span></span><br><span class="line">spwan ssh -p22 root@192.168.1.26 /usr/sbin/ifconfig eth0</span><br><span class="line">set timeout 60</span><br><span class="line">expect &#123;</span><br><span class="line">    -timeout 1</span><br><span class="line">    &quot;yes/no&quot; &#123; exp_send &quot;yes\r&quot;; exp_continue &#125;</span><br><span class="line">    &quot;*password:&quot; &#123; exp_send &quot;root1234\r&quot; &#125;</span><br><span class="line">    timeout &#123; puts &quot;expect was timeout&quot;; return &#125;</span><br><span class="line">&#125;</span><br><span class="line">expect eof</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+<p>个人理解：spwan后面的命令的输出，从第一行开始进行expect遍历匹配，若匹配则执行动作，不匹配则进行下条匹配，而exp_continue的作用是，<em>若不匹配则跳过此行输出，并进行第二行输出进行expect的匹配</em></p>
+<h4 id="5-5-send-user"><a href="#5-5-send-user" class="headerlink" title="5.5.send_user"></a>5.5.send_user</h4><p>send_user用于把后面的参数输出到<strong>标准输出</strong>中去，默认的<code>send</code>、<code>exp_send</code>都是将参数<strong>输出到程序</strong>中去，用法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">send_user &quot;please input password:&quot;</span><br></pre></td></tr></table></figure>
+<p>这样就可以在标准输出中打印<code>please input password:</code>字符了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/expect</span></span><br><span class="line">if &#123; $argc != 3 &#125; &#123;</span><br><span class="line">    send_user &quot;usage: expect scp-expect.exp file host dir\n&quot;</span><br><span class="line">    exit</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-6-exit"><a href="#5-6-exit" class="headerlink" title="5.6.exit"></a>5.6.exit</h4><p>exit命令功能很简单，就是直接退出脚本，但可以利用这个命令做一些扫尾工作，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exit -onexit &#123;</span><br><span class="line">    exec rm $tmpfile</span><br><span class="line">    send_user &quot;Good Bye\n&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-expect变量："><a href="#6-expect变量：" class="headerlink" title="6.expect变量："></a>6.expect变量：</h3><p>expect中有很多有用的变量，他们的使用方法与TCL中的变量相同，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set 变量名 变量值  # 设置变量的方法</span><br><span class="line">puts $变量名       # 读取变量的方法</span><br><span class="line"></span><br><span class="line"># define var</span><br><span class="line">set file [lindex $argv 0] # 取命令行参数的</span><br><span class="line">set host [lindex $argv 1]</span><br><span class="line">set dir  [lindex $argv 2]</span><br><span class="line">set password &quot;root1234&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-expcct关键字："><a href="#7-expcct关键字：" class="headerlink" title="7.expcct关键字："></a>7.expcct关键字：</h3><p>expect中的关键字用于匹配过程，代表某些特殊含义或状态，一般用于expect命令中而不能在外面使用，也可以理解为事件，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect eof &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-1-eof"><a href="#7-1-eof" class="headerlink" title="7.1.eof"></a>7.1.eof</h4><p>eof(end-of-file)关键字用于匹配结束符，比如文件、ftp传输停止等，在这个关键字后跟上动作来做进一步的控制，特别是ftp交互操作方面，他的作用很大，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spawn ftp root@192.168.1.26</span><br><span class="line">expect &#123;</span><br><span class="line">    &quot;password:&quot; &#123;exp_send &quot;root1234&quot;&#125;</span><br><span class="line">    eof &#123; ftp connect close &#125;</span><br><span class="line">&#125;</span><br><span class="line">interact &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>interact也是关键字，可以是当前停留在服务端，交互模式使用</p>
+<h4 id="7-2-timeout"><a href="#7-2-timeout" class="headerlink" title="7.2.timeout"></a>7.2.timeout</h4><p>timeout是expect中的一个重要变量，它是一个全局性的时间控制开关，你可以通过为这个变量赋值来规定整个expect操作的时间，注意这个变量是服务与expect全局的。例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set timeout 60</span><br><span class="line">spawn ssh root@192.168.1.26</span><br><span class="line">expect &quot;*password:&quot; &#123; send &quot;root1234\n&quot; &#125;</span><br><span class="line">expect timeout &#123;puts &quot;timeout&quot;; return &#125;</span><br></pre></td></tr></table></figure>
+<p>先将超时间设置为60秒，当程序阻塞到60秒，就会激活timeout动作。</p>
+<p>另一种设置timeout的方法，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spwan ssh root@192.168.1.26</span><br><span class="line">expect &#123;</span><br><span class="line">    -timeout 60</span><br><span class="line">    -re &quot;password:&quot; &#123;exp_send &quot;root1234\r&quot;&#125;</span><br><span class="line">    -re &quot;TopsecOS#&quot; &#123; &#125;</span><br><span class="line">    timeout &#123; puts &quot;timeout&quot;; return &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7．使用实例："><a href="#7．使用实例：" class="headerlink" title="7．使用实例："></a>7．使用实例：</h3><p>实例1：进行远程拷贝(#!/usr/bin/expect)</p>
+<p>1.sh:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/expect</span></span><br><span class="line">spawn scp log.log root@&lt;ip&gt;:/home/lxy</span><br><span class="line"><span class="meta">#</span><span class="bash"> 匹配到信息password则发送信息</span></span><br><span class="line">expect &quot;*password*&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 发送密码123456</span></span><br><span class="line">send &quot;123456\r&quot;</span><br><span class="line">expect eof</span><br></pre></td></tr></table></figure>
+<p>执行：<code>./1.sh</code>或者<code>expect 1.sh</code>，不能使用<code>sh 1.sh</code>或<code>bash 1.sh</code></p>
+<p>实例2：进行远程拷贝(#!/bin/sh或者#!/bin/bash)</p>
+<p>2.sh:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">passwd=&#x27;123456&#x27;</span><br><span class="line"></span><br><span class="line">spawn scp log.log root@&lt;ip&gt;:/home/lxy</span><br><span class="line"><span class="meta">#</span><span class="bash"> 匹配到信息password则发送信息</span></span><br><span class="line">expect &quot;*password*&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 发送密码123456</span></span><br><span class="line">send &quot;$passwd\r&quot;</span><br><span class="line">expect eof</span><br></pre></td></tr></table></figure>
+<p>执行：<code>expect 2.sh</code></p>
+<p>实例3：进行远程拷贝—推荐使用此方法</p>
+<p>3.sh:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">  spawn scp log.log root@&lt;ip&gt;:/home/lxy</span><br><span class="line">  expect &#123;</span><br><span class="line">     \&quot;*yes/no\&quot; &#123; send \&quot;yes\r\&quot;; exp_continue &#125;</span><br><span class="line">     \&quot;*password*\&quot; &#123;set timeout 300; send \&quot;123456\r\&quot;;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">expect eof&quot;</span><br></pre></td></tr></table></figure>
+<p>执行：<code>./3.sh</code>、<code>sh 3.sh</code>或<code>bash 3.sh</code></p>
+<p>实例4：进行远程拷贝(最终版本)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">username=&#x27;root&#x27;</span><br><span class="line">password=&#x27;eastcom&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 目录服务器IP</span></span><br><span class="line">ip=&#x27;127.0.0.1&#x27;</span><br><span class="line"></span><br><span class="line">expect -c &quot;</span><br><span class="line">  spawn scp log.log $username@$ip:/home/liuxy</span><br><span class="line">  expect &#123;</span><br><span class="line">     \&quot;*yes/no\&quot; &#123; send \&quot;yes\r\&quot;; exp_continue &#125;</span><br><span class="line">     \&quot;*password*\&quot; &#123;set timeout 300; send \&quot;$password\r\&quot;;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">expect eof&quot;</span><br></pre></td></tr></table></figure>
+
+<p>实例5：expect执行多条命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">set timeout 10</span><br><span class="line"></span><br><span class="line">spawn sudo su - root</span><br><span class="line">expect &quot;*password*&quot;</span><br><span class="line">send &quot;123456\r&quot;</span><br><span class="line">expect &quot;]#*&quot;</span><br><span class="line">send &quot;ls\r&quot;</span><br><span class="line">expect &quot;]#*&quot;</span><br><span class="line">send &quot;df -Th\r&quot;</span><br><span class="line">send &quot;exit\r&quot;</span><br><span class="line">expect eof</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/saneri/p/10819348.html">参考</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jellythink.com/archives/373">参考</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.fblinux.com/?p=526">参考</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:aethon47@163.com">LXY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-expect%E5%91%BD%E4%BB%A4/">http://example.com/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-expect%E5%91%BD%E4%BB%A4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">LXY's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-echo%E5%91%BD%E4%BB%A4/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux命令-echo命令</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-dirname%E5%91%BD%E4%BB%A4/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux命令-dirname命令</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/02/06/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/Linux-%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D/" title="Linux根目录介绍"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-06</div><div class="title">Linux根目录介绍</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/Linux%E5%91%BD%E4%BB%A4%E7%B3%BB%E5%88%97%E6%80%BB%E7%9B%AE%E5%BD%95/" title="Linux命令大全-目录"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令大全-目录</div></div></a></div><div><a href="/2021/02/07/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%86%85%E6%A0%B8%E5%8F%8A%E5%8F%91%E8%A1%8C%E7%89%88%E5%88%86%E7%B1%BB/" title="Linux内核及发行版分类"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-07</div><div class="title">Linux内核及发行版分类</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-at%E5%91%BD%E4%BB%A4/" title="Linux命令-at命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令-at命令</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-cal%E5%91%BD%E4%BB%A4/" title="Linux命令-cal命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令-cal命令</div></div></a></div><div><a href="/2021/04/28/Linux/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/Linux%E5%91%BD%E4%BB%A4-basename%E5%91%BD%E4%BB%A4/" title="Linux命令-basename命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-28</div><div class="title">Linux命令-basename命令</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LXY</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Coding-Coder"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Coding-Coder" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:aethon47@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">本站仅供个人学习笔记使用！如有问题或文章存在错误，请联系aethon47@163.com。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8E%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">1．命令格式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8E%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">2．命令功能：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">3.工作流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8E%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">4．命令参数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-expect%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">5.expect语法：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-spwan"><span class="toc-number">5.1.</span> <span class="toc-text">5.1.spwan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-expect"><span class="toc-number">5.2.</span> <span class="toc-text">5.2.expect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-exp-send%E5%92%8Csend"><span class="toc-number">5.3.</span> <span class="toc-text">5.3.exp_send和send</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-exp-continue"><span class="toc-number">5.4.</span> <span class="toc-text">5.4.exp_continue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-send-user"><span class="toc-number">5.5.</span> <span class="toc-text">5.5.send_user</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-6-exit"><span class="toc-number">5.6.</span> <span class="toc-text">5.6.exit</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-expect%E5%8F%98%E9%87%8F%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">6.expect变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-expcct%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">7.expcct关键字：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-1-eof"><span class="toc-number">7.1.</span> <span class="toc-text">7.1.eof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-timeout"><span class="toc-number">7.2.</span> <span class="toc-text">7.2.timeout</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8E%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B%EF%BC%9A"><span class="toc-number">8.</span> <span class="toc-text">7．使用实例：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次丢失的GitHub Contributions绿格"/></a><div class="content"><a class="title" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格">记一次丢失的GitHub Contributions绿格</a><time datetime="2021-06-04T06:07:00.000Z" title="发表于 2021-06-04 14:07:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 常见案例"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例">Git 常见案例</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 教程"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程">Git 教程</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Ruby"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby">Linux安装Ruby</a><time datetime="2021-05-06T06:47:00.000Z" title="发表于 2021-05-06 14:47:00">2021-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Redis"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis">Linux安装Redis</a><time datetime="2021-05-06T03:10:00.000Z" title="发表于 2021-05-06 11:10:00">2021-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LXY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

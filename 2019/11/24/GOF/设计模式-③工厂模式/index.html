@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设计模式|③工厂模式 | LXY's blog</title><meta name="keywords" content="设计模式"><meta name="author" content="LXY,aethon47@163.com"><meta name="copyright" content="LXY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="&amp;emsp;今天我们开始一个新的模式——工厂模式。工厂模式作为本系列第二个登场的角色，可想而知它的重要性了。另外和单例模式相比，工厂模式会相对复杂一些，因为单例模式只涉及一个对象，而工厂模式会涉及到多个对象。而且这一模式在实际开发中，那真的是应用得太太太太太太™广泛了……😱再多的太都不足形容。因此，这个模式也是我们需要深入掌握的一个模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式|③工厂模式">
+<meta property="og:url" content="http://example.com/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LXY&#39;s blog">
+<meta property="og:description" content="&amp;emsp;今天我们开始一个新的模式——工厂模式。工厂模式作为本系列第二个登场的角色，可想而知它的重要性了。另外和单例模式相比，工厂模式会相对复杂一些，因为单例模式只涉及一个对象，而工厂模式会涉及到多个对象。而且这一模式在实际开发中，那真的是应用得太太太太太太™广泛了……😱再多的太都不足形容。因此，这个模式也是我们需要深入掌握的一个模式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-11-24T07:44:00.000Z">
+<meta property="article:modified_time" content="2021-11-25T09:03:54.876Z">
+<meta property="article:author" content="LXY">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '设计模式|③工厂模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-25 17:03:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LXY's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">设计模式|③工厂模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-11-24T07:44:00.000Z" title="发表于 2019-11-24 15:44:00">2019-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-25T09:03:54.876Z" title="更新于 2021-11-25 17:03:54">2021-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="设计模式|③工厂模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>&emsp;今天我们开始一个新的模式——<strong>工厂模式</strong>。工厂模式作为本系列第二个登场的角色，可想而知它的重要性了。另外和单例模式相比，工厂模式会相对复杂一些，因为单例模式只涉及一个对象，而工厂模式会涉及到多个对象。而且这一模式在实际开发中，那真的是应用得太太太太太太™广泛了……😱再多的太都不足形容。因此，<strong>这个模式也是我们需要深入掌握的一个模式</strong>。</p>
+<span id="more"></span>
+
+<h2 id="为什么需要工厂模式"><a href="#为什么需要工厂模式" class="headerlink" title="为什么需要工厂模式"></a>为什么需要工厂模式</h2><p>看过我之前写的文章的应该都清楚我的风格，学一样东西，我会先简单思考一下，这玩意到底有啥用，学了能帮我解决什么，才能决定我如何学以及学习的深度。同样，今天学习工厂模式，我们先来看看.</p>
+<blockquote>
+<p>❓工厂模式是个什么玩意？到底有什么用？为什么会出现这一模式？帮我们解决了什么问题？如果没有它会怎么样？</p>
+</blockquote>
+<p>工厂模式，顾名思义，跟工厂有关。何为工厂？工厂就是用来生产产品的，例如汽车工厂用来生产汽车，粮食工厂用来生产粮食等。那在面向对象软件开发领域，自然是用这种模式来生产对象的。所以工厂模式也是属于之前说过的<strong>创建型模式</strong>。那老问题来了，平时我们创建一个对象大多数情况都是直接new一下不就有了吗？为什么非要按照你工厂模式的套路来创建对象？</p>
+<p>为方便理解，下面我举个简单的例子，如下代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    Dao dao = <span class="keyword">new</span> JpaDao(); ❶</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">service</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="comment">//使用dao进行一系列持久层操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>做过Java后端开发的对上面的代码套路太熟悉不过了，这是一个经典的<code>Service</code>层，调用<code>DAO</code>层API完成数据库操作，这没有什么好说的。现在假设这个团队使用的持久层框架是JPA，所以他们把所有的数据库操作都封装在<code>JpaDao</code>这个工具类中，然后在<code>Service</code>类里面通过new得到一个实例，并在具体业务方法中使用它来完成数据库操作。这代码执行结果会有问题吗？当然不会，这代码肯定能跑起来，业务逻辑正常执行完成。</p>
+<blockquote>
+<p>❓但是思考一下，这样的代码会有啥问题？</p>
+</blockquote>
+<p>假设某一天，经过团队讨论，决定不用<code>JPA</code>这玩意了，还是使用<code>Mybatis</code>。于是团队各大高手通宵达旦，连夜又将<code>Mybatis</code>封装了一波，并开发出来一个<code>MybatisDao</code>工具包，打算用它来替换之前工程中使用的<code>JpaDao</code>。好了，现在问题来了，原来<code>Dao dao = new JpaDao()</code>这一行是写死在每一个<code>Service</code>类中，现在需要将所有<code>Service</code>类中的<code>Dao dao = new JpaDao()</code>修改为<code>Dao dao = new MybatisDao()</code>。要是整个工程就只有几个<code>Service</code>类，那还好办，改就改了。那要是成千上万呢？那通宵加班是免不了了……😭而且，要是下次又换个别的框架，又来这么一下，那还不得吐血啊⁉️……😒</p>
+<p>在这个系列文章开篇，我们提到过设计的几大原则，这个代码就涉及到了其中的<strong>开闭原则</strong>。</p>
+<blockquote>
+<p>👉开闭原则倡导，软件实体应当对扩展开放，对修改关闭。</p>
+</blockquote>
+<p>翻译成人话就是说，你想要扩展或者修改以前已经写好的代码的功能，你可以往里面加入新的代码，但是绝对不允许修改以前已经写好的代码。很显然，上面代码违反了这一原则。</p>
+<blockquote>
+<p>❓那么我们来分析一下，这个代码关键问题在哪里，才会导致这种不可收拾的结果？</p>
+</blockquote>
+<p>不难发现，在这个代码中，<code>Service</code>和<code>JpaDao</code>是紧耦合的，也就意味着，每个<code>Service</code>你只能使用<code>JpaDao</code>，要想使用其它的，没有其他选择，必须修改代码。</p>
+<blockquote>
+<p>❓如何解决？</p>
+</blockquote>
+<p>思考一下，既然上面提到，这个代码中核心问题是<code>Service</code>和<code>JpaDao</code>的耦合导致代码的扩展性很差，那自然想到，有什么办法可以让它解耦？问题关键在于，在❶处是直接new出来一个非常具体的底层对象！</p>
+<blockquote>
+<p>⚠️new操作本身就是一个耦合的操作！</p>
+</blockquote>
+<p>所以要想<code>Service</code>和<code>JpaDao</code>解耦，必须拿掉这个<code>new</code>的逻辑。可是对象还是得创建啊，<code>new</code>拿掉了还怎么创建呢？<code>new</code>当然还是要<code>new</code>的，但是得让他挪个地方。优化代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    Dao dao = DaoFactory.getDao(); ❶</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">service</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//使用dao进行一系列持久层操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我将所有的<code>new</code>的代码全部抽取到<code>Service</code>类外部的一个单独<code>DaoFactory</code>类中，如下，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DaoFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Dao <span class="title">getDao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JpaDao(); ❷</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样优化后有一个明显好处，以后不管你团队换啥持久层实现，所有的Service类是不需要再动了，比如需要将持久层框架改为<code>Mybatis</code>，只需要修改一下<code>DaoFactory</code>类❷处，将其改为<code>return new MybatisDao()</code>就可以了，这样一来，修改代码的工作量极大减少。这个方案和刚开始的相比，可以说已经是一个很大的进步了。但是，现在虽然代码修改工作量少了，可是根本问题还是没有解决，<code>DaoFactory</code>的代码还是得修改啊？开闭原则该违反还是违反。作为一个对技术有极致的程序猿👨‍💻‍，怎么可能容忍这等事情呢⁉️</p>
+<p><strong>绝对不可能！</strong></p>
+<p>还有没有妙招？当然有！</p>
+<p>其实上面<code>DaoFactory</code>之所以还需要修改，罪魁祸首还是因为❷处直接<code>new</code>了一个具体对象！哎呀，这万恶的<code>new</code>啊……😒想要解耦，必须拿掉<code>new</code>的逻辑，可是还是那个问题，不<code>new</code>怎么创建对象？依稀还记得当前大明湖畔的<strong>反射</strong>吗？Java当中的反射太强大了，给一个字符串就可以直接创建一个对象，牛逼🐂！这样就不需要通过<code>new</code>啦！那问题来了，这个字符串怎么传？要是通过方法参数传入，那不还得修改源代码吗？有没有一种方案可以不用通过代码传递参数的？没错，配置文件！哈哈，O了，于是再次优化方案，如下，</p>
+<p>在类路径下创建<code>config.properties</code>文件，配置内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dao=com.example.demo.pattern.factory.JpaDao</span><br></pre></td></tr></table></figure>
+
+<p>然后DaoFactory内容修改如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DaoFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Dao <span class="title">getDao</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Properties prop = <span class="keyword">new</span> Properties();</span><br><span class="line">        prop.load(DaoFactory.class.getClassLoader().getResourceAsStream(<span class="string">&quot;config.properties&quot;</span>));</span><br><span class="line">        Class&lt;?&gt; dao = Class.forName((String) prop.get(<span class="string">&quot;dao&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> (Dao) dao.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大家看出其中的奥秘了吗？这样一来就把代码中耦合的部分提取到了<strong>外部配置文件</strong>，后续再要修改<code>Dao</code>实现方式，只需要提供对应的<code>xxxDao</code>类，并将其全类名配置在<code>config.properties</code>中即可。所有的<code>Service</code>类中获取<code>Dao</code>的方式还是通过<code>DaoFactory.getDao()</code>，再也不需要修改了。O了，这真是个绝妙的完美方案啊~👏</p>
+<p>说到这儿，大家可能有点懵逼了，哎，今天不是说好讲工厂模式的吗？讲了一大圈废话，这讲的是啥？哈哈，如果你能看懂上面这个例子，那么，恭喜你，你已经学习了工厂模式一部分内容。没错，上面这个例子就是一个经典的<strong>简单工厂模式</strong>的案例。</p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>简单工厂模式是工厂模式的第一种形式，又叫<strong>静态工厂模式</strong>。顾名思义，因为这种工厂模式中<strong>获取对象的方法</strong>一般都定义成<strong>静态方法</strong>，形式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;R,P&gt; <span class="function">R <span class="title">getInstance</span><span class="params">(P type)</span></span>&#123;</span><br><span class="line">        <span class="comment">//根据传入的type不同做if else判断返回不同类型的对象。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者还有另一种形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;R,P&gt; <span class="function">R <span class="title">getInstance01</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建一种类型的对象</span></span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="keyword">public</span> <span class="keyword">static</span> &lt;R,P&gt; <span class="function">R <span class="title">getInstance02</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建另一种类型的对象</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两种形式本质上跟前面例子中<code>DaoFactory.getDao()</code>方法是一样的，无非我们是通过直接修改<strong>返回值</strong>（或者修改<strong>配置文件</strong>）来返回不同类型对象，这边是通过对传入的字段判断达到返回不同类型对象的目的。</p>
+<p>当然，你也可以将获取对象的方法定义成普通方法，然后通过<code>Factory</code>的实例调用其<code>getInstance()</code>，完全没问题。如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;R,P&gt; <span class="function">R <span class="title">getInstance</span><span class="params">(P type)</span></span>&#123;</span><br><span class="line">        <span class="comment">//根据传入的type不同做if else判断返回不同类型的对象。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实这种方式又叫做<strong>实例工厂模式</strong>。这两种方式的区别在于，<strong>静态工厂</strong>可以直接用类名调用而不需要创建出工厂类的实例。但是我们知道，静态方法可以继承，但是没有办法被重写，没有重写也就不可能实现多态的特性了。所以静态工厂是<strong>没有办法</strong>通过继承方式来动态<strong>改变</strong>工厂创建对象的行为的。</p>
+<blockquote>
+<p>👉优缺点</p>
+</blockquote>
+<p>通过上面这个例子，我们不难看出，<strong>简单工厂模式</strong>确实在一定程度上实现代码的解耦，而这种解耦的特点在于，这种模式将对象的创建和使用分离，其实这个特点是所有创建型模式的共性，包括前面聊过的<strong>单例模式</strong>，以及接下去后面还会讲到的其他的创建型模式都有这个特点。另外，<strong>简单工厂模式</strong>也起到了一定的封装功能。试想一下，假设上面的<code>DaoFactory.getDao()</code>返回的<code>JpaDao</code>和<code>MybatisDao</code>对象创建过程非常繁琐冗长，如果不使用工厂模式，<code>JpaDao</code>和<code>MybatisDao</code>对象的创建逻辑就会散落在项目中各个<code>Service</code>类，以及其他用到该对象的地方，造成代码<strong>重复冗余</strong>。</p>
+<p>但是这种模式的缺点也很明显，<strong>不符合开闭原则</strong>。这种模式的本质在于通过一个传入的参数，做<code>if else</code>判断，来达到返回不同类型对象的目的。因此，如果需要增加新的类型，就不得不去修改原来的代码，<strong>违反开闭原则</strong>。虽然这个问题可以通过前面反射+外部配置文件的方式在一定程度上得到缓解，但是这只是一种“投机取巧”的解决方案，并没有从根本上解决简单工厂模式的问题。</p>
+<p>或许也就是因为这原因，很遗憾，<strong>简单工厂模式</strong>其实<strong>并不属于GOF23体系</strong>。</p>
+<p>那么有没有更好的办法，从根本上解决简单工厂模式的问题呢？答案当然是有的！</p>
+<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><blockquote>
+<p>❓其实，简单工厂模式之所以违反开闭原则，关键在于什么？</p>
+</blockquote>
+<p>那就是它把所有对象的创建都集中在同一个工厂类里面了！因此，当新增一个新对象时，必然会需要修改这个共享工厂类，违反开闭原则自然不可避免。</p>
+<blockquote>
+<p>❓思考一下，既然问题关键在于，所有对象的创建都跟这个唯一的工厂类耦合了，那我每个对象各自都配置一个单独的工厂类，这个工厂类只创建各自类型的对象，那这样不就解决耦合的问题了吗？</p>
+</blockquote>
+<p>这就引出了工厂模式的第二种形式——<strong>工厂方法模式</strong>。工厂方法模式的产生就是为了解决上面提到的简单工厂模式所遇到的问题的。工厂方法模式是<strong>在简单工厂模式基础上进一步抽象，将工厂类设计成抽象类或接口</strong>，不同的产品实现各自的工厂实体类。创建对象时，只需要提供对应的产品类和该产品的工厂类即可，不需要知道内部创建过程。</p>
+<p>就比如上面例子的<code>DaoFactory</code>类，现在我们将其抽象成接口，然后同时为每一个DAO类实现一个对应的工厂实现类，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">DaoFactory</span></span>&#123;</span><br><span class="line">    <span class="function">Dao <span class="title">getDao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JpaDaoFactory</span> <span class="keyword">implements</span> <span class="title">DaoFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Dao <span class="title">getDao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JpaDao();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MybatisDaoFactory</span> <span class="keyword">implements</span> <span class="title">DaoFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Dao <span class="title">getDao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MybatisDao();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在创建<code>Service</code>类时将具体的实现类对应的工厂类传入，利用<strong>多态</strong>就可以实现不同的持久层实现切换。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Dao dao;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Service</span><span class="params">(DaoFactory daoFactory)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.dao = daoFactory.getDao();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">service</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">//使用dao进行一系列持久层操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>❓优缺点</p>
+</blockquote>
+<p>从上面例子不难看出，工厂方法模式轻松解决了简单工厂模式的问题，<strong>符合开闭原则</strong>。在上面例子中，当需要切换另外某持久层实现，比如<code>JDBC</code>，此时只需要提供一个对应的<code>JDBCDaoFactory</code>实现<code>DaoFactory</code>的<code>getDao</code>方法，返回对应的<code>Dao</code>对象即可，对于原先代码再不需要做任何修改。</p>
+<p>其实在工厂方法模式中，可以引申出另外一种设计原则，<strong>依赖倒置原则</strong>。</p>
+<blockquote>
+<p>👉依赖倒置原则倡导我们要面向接口编程，不要面向实现编程。就比如上面例子中，和Service类耦合的是最高层接口DaoFactory，而底层实现是当程序运行时才决定的。</p>
+</blockquote>
+<p><strong>那工厂方法模式有缺点吗？当然，没有什么是完美的。</strong></p>
+<p>很明显的一点，每个类型的对象都会有一个与之对应的工厂类。如果对象的类型不是很多，那还好。但是如果对象的类型非常多，意味着会需要创建很多的工厂实现类，造成类数量膨胀，对后续维护带来一些麻烦。</p>
+<p><strong>而且，这当中有一种特殊情况！</strong></p>
+<p>有时候这些对象类型很多，但是彼此之间有依赖或者关系很紧密，属于同一个系列的东西，完全可以一起创建，没必要再另起炉灶，为每个对象单独创建一个工厂实现类了。但是使用工厂方法模式，你还是不得不为每个对象单独创建一个工厂实现类，因此非常繁琐。为了帮助理解这一点，下面举个例子。</p>
+<p>假设现在需要创建一个手枪对象，但是有手枪，肯定需要配备子弹吧？没有子弹你玩什么枪？也就是说，你还要附带创建一个子弹对象。那如果使用上面的工厂方法模式能不能完成这一需求呢？</p>
+<p>当然没问题，只要定义一个手枪和子弹对象的公共工厂接口，然后各自创建不同的工厂实现类即可。但是这样的话，你需要有两个工厂实现类。如果还需要配备其它和手枪相关的装备，还需要再继续创建一个对应的工厂实现类。再继续延伸，手枪可能还会分很多种类，上面说的只是其中一类，要是还有另外一种类的手枪，你也需要这么来一波操作，工厂实现类的数量继续翻倍。以此类推……</p>
+<blockquote>
+<p>❓发现问题了没？</p>
+</blockquote>
+<p>这也是上面总结的工厂方法模式的<strong>缺点</strong>。当随着创建的对象类型越来越多，工厂实现类数量也跟着膨胀。而这个例子中，创建的对象都是和手枪紧密相关的，你要创建手枪，其余组件也是需要跟着创建的，那这个时候也就没必要再单独为每一个组件配置一个工厂实现类了，直接在同一个工厂类中一起创建，这样不就解决工厂实现类数量膨胀问题了吗？而这正是前面的工厂方法模式遇到的最大问题啊⁉️哈哈，O了~</p>
+<p>其实这个思路的实现，就是我们接下来要聊的<strong>抽象工厂模式</strong>了！</p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><p>抽象工厂模式是工厂模式的第三种形式，也是工厂模式中最为复杂和难以理解的一种形式。在GOF23中，抽象工厂模式其实是作为单独一个模式存在的，但是因为它和上面的两类工厂模式，尤其是工厂方法模式，存有较为密切的联系，所以我这边就放一起说了。</p>
+<p><strong>抽象工厂模式出现，就是为了解决上述工厂方法模式存在的问题，可以看成是工厂方法模式的升级。</strong></p>
+<blockquote>
+<p>❓怎么理解？</p>
+</blockquote>
+<p>说实话，这句话是本文中最难理解的一句话了，下面我来做分析。</p>
+<p>从上面工厂方法模式的例子不难看出，<strong>工厂方法模式创建的对象其实归根到底都是同一类对象</strong>。还是说手枪的例子，无论创建的是A类手枪及其附属组件，还是B类手枪及其附属组件，归根到底他们都属于同一个底层接口的实现。怎么理解？请看下图。</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-1.png" alt="抽象工厂模式-1"></p>
+<p>由上图不难得出，虽然武器分为A类和B类，但是从工厂方法模式角度，他们都是属于武器这一层级，这就导致了需要为每一个单独武器指定各自的工厂类，从而导致类数量膨胀问题。</p>
+<p>自然会想到，那为什么不单独为每一类武器指定一个工厂类，这样不就可以大幅减少工厂类的数量了吗？如下图。</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-2.png" alt="抽象工厂模式-2"></p>
+<p>这样当每一类武器组件数量特别多，而组件之间又是紧密关联的时候，对减少工厂类数量起到极大的效果。下面我们就用代码简单的实现一下上面的例子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Weapon</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Gun</span> <span class="keyword">extends</span> <span class="title">Weapon</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Bullet</span> <span class="keyword">extends</span> <span class="title">Weapon</span></span>&#123;&#125;</span><br><span class="line"><span class="comment">//A类武器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GunA</span> <span class="keyword">implements</span> <span class="title">Gun</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BulletA</span> <span class="keyword">implements</span> <span class="title">Bullet</span></span>&#123;&#125;</span><br><span class="line"><span class="comment">//B类武器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GunB</span> <span class="keyword">implements</span> <span class="title">Gun</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BulletB</span> <span class="keyword">implements</span> <span class="title">Bullet</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//顶层武器工厂</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">WeaponFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">Gun <span class="title">getGun</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Bullet <span class="title">getBullet</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//A类武器工厂，用来创建A类武器，包括A类手枪和A类子弹</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AWeaponFactory</span> <span class="keyword">implements</span> <span class="title">WeaponFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Gun <span class="title">getGun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> GunA();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bullet <span class="title">getBullet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BulletA();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//B类武器工厂，用来创建B类武器，包括B类手枪和B类子弹</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BWeaponFactory</span> <span class="keyword">implements</span> <span class="title">WeaponFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Gun <span class="title">getGun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> GunB();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bullet <span class="title">getBullet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BulletB();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实上面的A类武器和B类武器有一个专用术语叫做<strong>产品族</strong>。抽象工厂模式就是为了创建一系列以产品族为单位的对象，而产品族内各个单独组件关系密切。这样在需要创建大量系列对象时可以大大提高开发效率，降低维护成本。</p>
+<blockquote>
+<p>👉抽象工厂模式和工厂方法模式的关系</p>
+</blockquote>
+<p>前面提到过，<strong>抽象工厂模式是工厂方法模式的升级</strong>。</p>
+<blockquote>
+<p>❓那到底升级了啥？</p>
+</blockquote>
+<p>其实是由原来的单一产品的生产升级成为了系列产品的生产。设想一下，假设上面手枪的例子中，每一类武器中就只生产一种武器（组件），比如就只生产手枪吧，不生产子弹等其他组件了，如下图，</p>
+<p><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-3.png" alt="抽象工厂模式-3"></p>
+<p>发现了什么没有？震惊！这居然转变为我们之前讲过的工厂方法模式啦！卧槽，niubibility，这才是“抽象工厂模式是工厂方法模式的升级”这句话阐述的本质。<strong>换句话说，当你的产品族中只生产一种产品的时候，你的抽象工厂模式其实已经退化为工厂方法模式了</strong>。反过来说，当生产多种产品时，工厂方法模式就进化为抽象工厂模式。</p>
+<blockquote>
+<p>❓那么抽象工厂模式存在什么问题？</p>
+</blockquote>
+<p>和工厂方法模式用来生产单一产品不同，抽象工厂模式天生就是为<strong>生产产品族</strong>而生的，而对于生产单一产品却无能为力。</p>
+<blockquote>
+<p>❓怎么理解？</p>
+</blockquote>
+<p>还是上面手枪的例子，现在假设在武器装备中，我需要再加一个组件，比如手榴弹，怎么操作？你需要在<code>WeaponFactory</code>接口中添加返回手榴弹对象的接口，这一加不得了了……所有的武器实现类全部需要修改并追加该方法的实现，违反了开闭原则。而如果需要添加一个新的产品族，那就简单了，比如新增一个C类武器，那就只需要添加一个C类武器的工厂实现类就好了，并不会对原有的代码造成任何影响。</p>
+<h2 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h2><p>工厂模式的三种形式都介绍完了，那我们实际开发中该如何去选择呢？</p>
+<ul>
+<li>从设计原则来说，<strong>简单工厂模式</strong>不符合开闭原则。但是很神奇，在实际场景中，简单工厂模式确实<strong>用的最多</strong>的。个人觉得有以下这些原因:<ul>
+<li>一、相对实现方式比较简单，维护起来也不困难。</li>
+<li>二、实际场景中需要工厂模式创建的对象数量一般也不会特别多。</li>
+<li>三、可以通过反射+外部配置文件的手段解决开闭原则的问题。</li>
+</ul>
+</li>
+<li><strong>工厂方法模式</strong>是专门用于解决单个对象创建工作，本身模式没问题，也符合开闭原则。但是存在工厂类数量膨胀的问题。如果需要创建的工厂类不是很多，是一种不错的选择。</li>
+<li><strong>抽象工厂模式</strong>天生就是为生产产品族而生的。所以如果你需要创建的对象非常之多，但是对象之间存在明显产品族特征，那么这个时候用抽象工厂模式非常合适。</li>
+</ul>
+<h2 id="抛砖引玉"><a href="#抛砖引玉" class="headerlink" title="抛砖引玉"></a>抛砖引玉</h2><p>关于工厂模式的理论内容就说到这里，接下去，我们看看工厂模式在实际开发中的应用场景。开头就说过，工厂模式应用非常之广，在JDK底层源码以及各大主流框架中随处可见，下面我就挑几处比较熟悉常用的例子说说。</p>
+<ul>
+<li>JDK当中的<code>Calendar</code>类相信大家都比较熟悉，我们经常会通过这个类来获取当前的日期时间。<code>Calendar</code>类的构造器都是<code>protected</code>的，所以要获得一个<code>Calendar</code>对象需要通过调用其<code>getInstance()</code>方法，这个方法内部就采用了<strong>静态工厂模式</strong>来返回一个<code>Calendar</code>对象。<code>getInstance()</code>最终会通过调用<code>createCalendar()</code>方法，并且会传入两个<code>TimeZone</code>和<code>Locale</code>类型的参数。核心代码片段如下:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Calendar <span class="title">createCalendar</span><span class="params">(TimeZone zone, Locale aLocale)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//此处省略大量无关代码</span></span><br><span class="line">    Calendar cal = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (aLocale.hasExtensions()) &#123;</span><br><span class="line">        String caltype = aLocale.getUnicodeLocaleType(<span class="string">&quot;ca&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (caltype != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (caltype) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;buddhist&quot;</span>:</span><br><span class="line">                    cal = <span class="keyword">new</span> BuddhistCalendar(zone, aLocale);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;japanese&quot;</span>:</span><br><span class="line">                    cal = <span class="keyword">new</span> JapaneseImperialCalendar(zone, aLocale);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;gregory&quot;</span>:</span><br><span class="line">                    cal = <span class="keyword">new</span> GregorianCalendar(zone, aLocale);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cal == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (aLocale.getLanguage() == <span class="string">&quot;th&quot;</span> &amp;&amp; aLocale.getCountry() == <span class="string">&quot;TH&quot;</span>) &#123;</span><br><span class="line">            cal = <span class="keyword">new</span> BuddhistCalendar(zone, aLocale);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (aLocale.getVariant() == <span class="string">&quot;JP&quot;</span> &amp;&amp; aLocale.getLanguage() == <span class="string">&quot;ja&quot;</span></span><br><span class="line">                &amp;&amp; aLocale.getCountry() == <span class="string">&quot;JP&quot;</span>) &#123;</span><br><span class="line">            cal = <span class="keyword">new</span> JapaneseImperialCalendar(zone, aLocale);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cal = <span class="keyword">new</span> GregorianCalendar(zone, aLocale);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  不难看出，<code>createCalendar()</code>方法就是通过对传入的<code>Locale</code>类型的参数内容判断，从而返回不同的<code>Calendar</code>对象。这是典型的<strong>简单工厂模式</strong>。</li>
+<li>另外在<code>Spring</code>当中有一个<code>FactoryBean</code>接口，这个接口是用来指定其实现类为一个具体的工厂类，以创建特定类型的对象。比如，其实现类<code>ThreadPoolExecutorFactoryBean</code>就是用来创建返回一个线程池对象，<code>ProxyFactoryBean</code>用来创建返回一个代理对象等，这是典型的<strong>工厂方法模式</strong>的体现。<code>FactoryBean</code>的实现类较多，大家有兴趣可以自己看看，这边不再赘述。</li>
+</ul>
+<p>其实，工厂模式在学习过程中是比较好辨别的，一般以<code>Factory</code>结尾命名的类，比如<code>Mybatis</code>中的<code>SqlSessionFactory</code>，<code>Spring</code>中的<code>BeanFactory</code>等，都是工厂模式的典型代表。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:aethon47@163.com">LXY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">http://example.com/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">LXY's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/11/27/lua/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">脚本语言Lua-OpenRestry</div></div></a></div><div class="next-post pull-right"><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">设计模式|②单例模式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A0%E5%BC%80%E7%AF%87/" title="设计模式|①开篇"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-23</div><div class="title">设计模式|①开篇</div></div></a></div><div><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="设计模式|②单例模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-23</div><div class="title">设计模式|②单例模式</div></div></a></div><div><a href="/2019/11/27/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A3%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" title="设计模式|④原型模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-27</div><div class="title">设计模式|④原型模式</div></div></a></div><div><a href="/2019/11/28/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A4%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" title="设计模式|⑤建造者模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-28</div><div class="title">设计模式|⑤建造者模式</div></div></a></div><div><a href="/2019/12/02/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A5%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="设计模式|⑥代理模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-02</div><div class="title">设计模式|⑥代理模式</div></div></a></div><div><a href="/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A6%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" title="设计模式|⑦适配器模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-26</div><div class="title">设计模式|⑦适配器模式</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LXY</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Coding-Coder"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Coding-Coder" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:aethon47@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">本站仅供个人学习笔记使用！如有问题或文章存在错误，请联系aethon47@163.com。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">为什么需要工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">简单工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">工厂方法模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">抽象工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9"><span class="toc-number">5.</span> <span class="toc-text">如何选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89"><span class="toc-number">6.</span> <span class="toc-text">抛砖引玉</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次丢失的GitHub Contributions绿格"/></a><div class="content"><a class="title" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格">记一次丢失的GitHub Contributions绿格</a><time datetime="2021-06-04T06:07:00.000Z" title="发表于 2021-06-04 14:07:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 常见案例"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例">Git 常见案例</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 教程"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程">Git 教程</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Ruby"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby">Linux安装Ruby</a><time datetime="2021-05-06T06:47:00.000Z" title="发表于 2021-05-06 14:47:00">2021-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Redis"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis">Linux安装Redis</a><time datetime="2021-05-06T03:10:00.000Z" title="发表于 2021-05-06 11:10:00">2021-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LXY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

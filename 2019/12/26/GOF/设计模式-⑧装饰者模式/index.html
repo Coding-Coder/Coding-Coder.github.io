@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设计模式|⑧装饰者模式 | LXY's blog</title><meta name="keywords" content="设计模式"><meta name="author" content="LXY,aethon47@163.com"><meta name="copyright" content="LXY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="&amp;emsp;今天我们要来聊的是装饰者模式，这个模式也是属于GOF23的结构型模式中的一个模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式|⑧装饰者模式">
+<meta property="og:url" content="http://example.com/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A7%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LXY&#39;s blog">
+<meta property="og:description" content="&amp;emsp;今天我们要来聊的是装饰者模式，这个模式也是属于GOF23的结构型模式中的一个模式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-12-26T07:33:00.000Z">
+<meta property="article:modified_time" content="2021-11-25T09:03:55.130Z">
+<meta property="article:author" content="LXY">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A7%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '设计模式|⑧装饰者模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-25 17:03:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LXY's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">设计模式|⑧装饰者模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-12-26T07:33:00.000Z" title="发表于 2019-12-26 15:33:00">2019-12-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-25T09:03:55.130Z" title="更新于 2021-11-25 17:03:55">2021-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="设计模式|⑧装饰者模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>&emsp;今天我们要来聊的是<strong>装饰者模式</strong>，这个模式也是属于GOF23的结构型模式中的一个模式。</p>
+<span id="more"></span>
+
+<h2 id="装饰者"><a href="#装饰者" class="headerlink" title="装饰者"></a>装饰者</h2><p>何为装饰？</p>
+<p>比如美女脸蛋上抹点粉，这就是装饰。房子装修一下，这也是装饰。咖啡里面加点牛奶，这也是装饰……生活当中，这样的场景太多了。那装饰有啥用呢？装饰后，美女变得更加亮丽动人，房子住的更加舒适，咖啡口感更加丝滑……</p>
+<p>说白了，<em>装饰的作用就是在原来的基础上面，加点新功能，让原来的东西功能变得更好</em>。就比如举个简单的例子，普通人都会跑步，但是能飞的肯定不是普通人，那是超人，那问题是，怎么才能成为一个像超人一样能飞的人呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Man</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">action</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommonMan</span> <span class="keyword">implements</span> <span class="title">Man</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我会跑步...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在原有基础上扩展功能很容易就能想到继承，所以可以如下实现:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperMan</span> <span class="keyword">extends</span> <span class="title">CommonMan</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.action();</span><br><span class="line">        fly();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我会飞...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，一个普通人就加上了飞的功能，如此之轻松，不是吗？</p>
+<p>现在假设，我还需要在飞的基础上再加无穷力量的功能，照样画瓢，如下实现，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperMan2</span> <span class="keyword">extends</span> <span class="title">SuperMan</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.action();</span><br><span class="line">        power();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">power</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;无穷力量!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还是如此之轻松，不是吗？</p>
+<p>现在我还需要在飞和无穷力量的基础上，再加上激光发射的功能，呵呵，这有啥难呢？继续画瓢呗？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperMan3</span> <span class="keyword">extends</span> <span class="title">SuperMan2</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.action();</span><br><span class="line">        shoot();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">shoot</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;激光发射!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有任何扩展难度啊？不是吗？</p>
+<p>现在来了个需求，我需要一个普通人再加上无穷力量的功能，但是不要飞的功能和激光发射的功能，照原来的思路，实现如下，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperMan4</span> <span class="keyword">extends</span> <span class="title">CommonMan</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.action();</span><br><span class="line">        power();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">power</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;无穷力量!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在假设需求又变了，我现在有想要一个普通人加上激光发射的功能，但是不要飞的功能和无穷力量……</p>
+<p>如果此时你发现情况好像有点不妙，那恭喜你，你的直觉很准。通过上面简单的演示，我们会发现，再扩展下去，类数量会越来越多，完全不好管理维护。而这种不好管理的问题，正是继承这种扩展方式带来的。其实之前的模式当前我们也曾经说到过，<strong>继承这种模式只适合应用在，父子类之间确实存在Is-A的关系，并且子类尽量通过增加新的方法，但是不要去修改父类已有的功能</strong>。否则，在扩展的时候就会出现扩展非常呆板，后期非常不好维护的局面。这边涉及到一个设计原则——<strong>里氏替换原则</strong>。</p>
+<blockquote>
+<p>里氏替换原则提倡，子类可以扩展父类的功能，但不能改变父类原有的功能。也就是说，子类继承父类时，除添加新的方法完成新增功能外，尽量不要重写父类的方法。</p>
+</blockquote>
+<p>继承的主要问题在于，父子类功能耦合性比较高，后续不容易修改，因为父类的功能都会被单向的继承给子类，但是子类的功能是无法反向给父类的。那有没有一种办法可以将功能点单独抽离出来？</p>
+<h2 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h2><p>这个需求使用装饰者模式来解决就特别合适了。<strong>装饰者模式</strong>采用的是<strong>组合</strong>的方式来解决的。之前我们也提到过，对于功能扩展，一般来说，<em>组合要优于继承方式</em>，因为组合耦合性更低，会更加灵活。下面我们来看看装饰者模式是怎么解决这个问题？</p>
+<p>我们需要先提供一个<strong>抽象装饰者类</strong>，这个类封装需要增强的原始对象，然后，根据不同的功能点提供其子类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonManWrapper</span> <span class="keyword">implements</span> <span class="title">Man</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Man man;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CommonManWrapper</span><span class="params">(Man man)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.man = man;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        man.action();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比如，需要增加飞的功能，那么增加一个子类，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommonManFlyWrapper</span> <span class="keyword">extends</span> <span class="title">CommonManWrapper</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CommonManFlyWrapper</span><span class="params">(Man man)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(man);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.action();</span><br><span class="line">        fly();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我会飞...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那这个类怎么用呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> CommonManFlyWrapper(<span class="keyword">new</span> CommonMan()).action();</span><br><span class="line"><span class="comment">//输出如下:</span></span><br><span class="line">我会跑步...</span><br><span class="line">我会飞...</span><br></pre></td></tr></table></figure>
+<p>哈哈，成功的实现了功能的扩展。有的人可能看得有点懵，这样设计有啥好处，看着好像比继承复杂多了，还不好理解啊？好，我们继续看…</p>
+<p>现在假设重新来实现最开始的需求，我需要在飞的基础上再加无穷力量的功能。这个时候，我们可不用再需要在<code>CommonManFlyWrapper</code>基础上去做扩展哦，这样又会出现继承的问题。我们将再创建一个装饰者类，这个类专门负责加无穷力量的功能。有没有发现？这样就是和其它功能完全解耦了，如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommonManPowerWrapper</span> <span class="keyword">extends</span> <span class="title">CommonManWrapper</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CommonManPowerWrapper</span><span class="params">(Man man)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(man);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.action();</span><br><span class="line">        power();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">power</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;无穷力量!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次运行结果如下，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> CommonManPowerWrapper(<span class="keyword">new</span> CommonMan()).action();</span><br><span class="line"><span class="comment">//输出如下:</span></span><br><span class="line">我会跑步...</span><br><span class="line">无穷力量!</span><br></pre></td></tr></table></figure>
+<p>看，这次只增加了无穷力量的功能，并没有带上其它功能。功能之间完全解耦。那现在我想要多个功能呢？既要能飞，也要有无穷力量，怎么实现？这个时候再也不需要添加新的类了，只要<em>把几个装饰者类组合一下</em>即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> CommonManPowerWrapper(<span class="keyword">new</span> CommonManFlyWrapper(<span class="keyword">new</span> CommonMan())).action();</span><br><span class="line"><span class="comment">//输出如下:</span></span><br><span class="line">我会跑步...</span><br><span class="line">我会飞...</span><br><span class="line">无穷力量!</span><br></pre></td></tr></table></figure>
+<p>有没有体会到这种设计的厉害！有心人肯定发现，这种操作方式和我们平时使用的<code>IO</code>的<code>API</code>极其相似。没错，<code>IO API</code>正是使用了<strong>装饰者模式</strong>，后面我们也会一起分析<code>IO API</code>的代码，现在我们可以来做个小总结。</p>
+<h2 id="装饰者和继承"><a href="#装饰者和继承" class="headerlink" title="装饰者和继承"></a>装饰者和继承</h2><p>首先我们来拿<strong>装饰者模式</strong>和<strong>继承方式</strong>做个比较。</p>
+<p>装饰者模式和继承方式都可以对类进行扩展。</p>
+<p>但是<strong>继承</strong>的问题我们开头可以看到，一旦涉及到有<em>多个功能点相互组合的需求</em>，继承扩展的呆板之处就一览无遗。比如需要在一个基类涉及3个功能点，相互组合，极端情况下，你会需要创建6个不同的子类来应对不同的需求扩展，这还不包括有些功能之间会存在顺序问题，这为后续维护带来极大的困难。</p>
+<p>而<strong>装饰者模式</strong>的增强主要是通过为每一个功能点创建各自的装饰者类，每一个装饰者只负责增强自己的功能，与其它的功能以及基类都不存在直接的附属关系，这样就把功能扩展点很好的解耦开来，后续通过不同的组合达到非常灵活的增强。</p>
+<h2 id="装饰者和代理模式"><a href="#装饰者和代理模式" class="headerlink" title="装饰者和代理模式"></a>装饰者和代理模式</h2><p>另外，在上面讲装饰者模式时，不知道有没有人发现，装饰者模式的实现方式跟之前讲过的代理模式简直惊人的相似！装饰者模式的装饰者类会需要实现被装饰对象相同接口，然后再实现的方法上做增强，这跟代理模式中，代理类需要和目标对象实现相同接口，然后再实现的方法上做增强貌似完全没区别啊？那么这两个模式到底有啥<strong>区别</strong>呢？</p>
+<p>其实关于这个问题，网上也是众说纷纭，我不想把网上的话跟着抄一遍，就谈点自己的想法。</p>
+<p>之前就说过，设计模式这玩意就是一种思路，没必要把几种模式区别的特别清楚，泾渭分明。其实这两个模式从实现上来说很相近，从作用上来说也是很相近的，<strong>都是对一个对象增强</strong>，只能说两者的侧重点不同。</p>
+<p><strong>装饰者模式</strong>如其名，他偏重于<em>在不改变原有对象的前提下，增强原有对象的功能，强调的是将功能一层层的包装到目标对象上，并且这个包装的过程可以在运行时动态的进行和切换</em>。</p>
+<p>而<strong>代理模式</strong>更多强调的是<em>通过为目标对象生成一个代理对象，屏蔽真实对象的直接访问的作用</em>。但是，这样的定义其实还是非常模糊的，因为代理在访问真实对象的时候，也可以为目标对象添加一些额外的功能，无非是她更关心的是代理的作用。反过来说，装饰者模式通过装饰者类对真实对象经过层层封装后达到增强原有对象的功能，但同时，这不也是一种代理吗？无非它更关心的是功能增强的这个过程。</p>
+<p>总之，设计模式是用来为写代码提供优雅的思路的，不是用来钻牛角尖的，所以关于两者区别，大家有自己的理解即可。</p>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><p>最后，我们还是一起看一下在实际开发场景中，装饰者模式到底是怎么使用的？</p>
+<blockquote>
+<p>谈到装饰者模式，首先不得不说<code>JDK</code>中<code>IO API</code>了。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStream inputStream = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(<span class="string">&quot;xxx&quot;</span>)));</span><br></pre></td></tr></table></figure>
+<p>上面就是我们平时开发中特别熟悉的IO的使用方式，使用<code>BufferedInputStream</code>对<code>FileInputStream</code>进行一个包装，使得<code>FileInputStream</code>增加了<strong>缓冲读取</strong>的功能，提高IO效率。其实在这里，<code>BufferedInputStream</code>就充当了<strong>装饰者</strong>的角色。那么JDK是怎么实现的呢？</p>
+<p>进入<code>BufferedInputStream</code>源码会发现，<code>BufferedInputStream</code>继承自<code>FilterInputStream</code>（可以看做成上面例子中的CommonManWrapper抽象类），<code>FilterInputStream</code>又继承自<code>InputStream</code>（可以看做是Man接口），在<code>FilterInputStream</code>中维护着一个<code>InputStream</code>类型的属性<code>in</code>，而其继承自<code>InputStream</code>核心方法<code>read()</code>中，将<code>read()</code>的功能转发给了传入的<code>in</code>。当往<code>BufferedInputStream</code>中传入一个<code>FileInputStream</code>类型的对象，最终会被设置到<code>in</code>中。而<code>BufferedInputStream</code>作为一个<strong>装饰者类</strong>，在其实现的<code>read()</code>中，会调用继承自<code>FilterInputStream</code>的<code>in</code>的<code>read()</code>功能，但是同时添加了使用缓冲操作的功能。</p>
+<blockquote>
+<p>另外再说一个<code>Mybatis</code>里面的应用。</p>
+</blockquote>
+<p><code>Mybatis</code>当中的<strong>缓存模块</strong>使用了<strong>装饰者模式</strong>。在<code>Mybatis</code>中，缓存模块最顶层接口是<code>Cache</code>接口，他有很多实现类，如图:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F-1.png" alt="装饰者模式-1"><br>但是这里面只有<code>PerpetualCache</code>是<em>真正具有缓存功能实现的实现类</em>，其内部会通过维护一个<code>HashMap</code>来缓存数据，而其余的<code>Cache</code>实现类<strong>都只是其装饰者类</strong>。以<code>LoggingCache</code>为例，他就会在<code>PerpetualCache</code>的功能基础上加上了日志功能。查看<code>LoggingCache</code>的<code>getObject()</code>方法:<br><img src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F-2.png" alt="装饰者模式-2"><br>其中的<code>delegate</code>就是定义在<code>LoggingCache</code>中的属性，由外部传入，将真正的缓存获取操作转发给它，同时添加打印缓存命中的日志信息。其余的<code>Cache</code>实现类如出一辙。</p>
+<p>另外，在<code>Java Servlet API</code>中有一个<code>HttpServletRequestWrapper</code>类，从命名就可以看出，这也是一个使用了装饰者模式的类，一般运用装饰者模式的类都会以<code>Wrapper</code>或者<code>Decorator</code>结尾。那这个类是干什么用的？听名字就可以知道，这个类是对<code>HttpServletRequest</code>进行装饰。这玩意主要配合<code>Filter</code>使用。</p>
+<p>比如现在有个需求，需要将客户端收到请求参数加密处理后再继续后传，这个时候我们可以自定义一个<code>HttpServletRequestWrapper</code>子类，然后重写其<code>getParameter()</code>方法，然后在原先的获取参数之后添加上加密逻辑，然后添加一个<code>Filter</code>，在他的<code>doFilter()</code>时候，使用我们自定义的<code>HttpServletRequestWrapper</code>对象替换掉原生的<code>HttpServletRequest</code>对象，达到偷梁换柱的效果。😊👏</p>
+<p><img src="/images/end.gif" alt="end"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:aethon47@163.com">LXY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A7%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">http://example.com/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A7%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">LXY's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A8%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">设计模式|⑨桥接模式</div></div></a></div><div class="next-post pull-right"><a href="/2019/12/26/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A6%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">设计模式|⑦适配器模式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A0%E5%BC%80%E7%AF%87/" title="设计模式|①开篇"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-23</div><div class="title">设计模式|①开篇</div></div></a></div><div><a href="/2019/11/23/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A1%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="设计模式|②单例模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-23</div><div class="title">设计模式|②单例模式</div></div></a></div><div><a href="/2019/11/24/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A2%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="设计模式|③工厂模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-24</div><div class="title">设计模式|③工厂模式</div></div></a></div><div><a href="/2019/11/27/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A3%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" title="设计模式|④原型模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-27</div><div class="title">设计模式|④原型模式</div></div></a></div><div><a href="/2019/11/28/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A4%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" title="设计模式|⑤建造者模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-28</div><div class="title">设计模式|⑤建造者模式</div></div></a></div><div><a href="/2019/12/02/GOF/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E2%91%A5%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="设计模式|⑥代理模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-02</div><div class="title">设计模式|⑥代理模式</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LXY</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">147</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Coding-Coder"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Coding-Coder" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:aethon47@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">本站仅供个人学习笔记使用！如有问题或文章存在错误，请联系aethon47@163.com。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E8%80%85"><span class="toc-number">1.</span> <span class="toc-text">装饰者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">装饰者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E8%80%85%E5%92%8C%E7%BB%A7%E6%89%BF"><span class="toc-number">3.</span> <span class="toc-text">装饰者和继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E8%80%85%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">装饰者和代理模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">实际应用场景</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次丢失的GitHub Contributions绿格"/></a><div class="content"><a class="title" href="/2021/06/04/git/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%A2%E5%A4%B1%E7%9A%84GitHub_Contributions%E7%BB%BF%E6%A0%BC/" title="记一次丢失的GitHub Contributions绿格">记一次丢失的GitHub Contributions绿格</a><time datetime="2021-06-04T06:07:00.000Z" title="发表于 2021-06-04 14:07:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 常见案例"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E6%A1%88%E4%BE%8B/" title="Git 常见案例">Git 常见案例</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 教程"/></a><div class="content"><a class="title" href="/2021/05/25/git/Git_%E6%95%99%E7%A8%8B/" title="Git 教程">Git 教程</a><time datetime="2021-05-25T10:09:00.000Z" title="发表于 2021-05-25 18:09:00">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Ruby"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Ruby/" title="Linux安装Ruby">Linux安装Ruby</a><time datetime="2021-05-06T06:47:00.000Z" title="发表于 2021-05-06 14:47:00">2021-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安装Redis"/></a><div class="content"><a class="title" href="/2021/05/06/Linux/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/Linux%E5%AE%89%E8%A3%85Redis/" title="Linux安装Redis">Linux安装Redis</a><time datetime="2021-05-06T03:10:00.000Z" title="发表于 2021-05-06 11:10:00">2021-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LXY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
